@@ -1,7 +1,6 @@
 package rect;
 
-import annotation.Peek;
-import main.Main;
+import processing.core.PGraphics;
 
 public class TextBox extends FancyRect{
 
@@ -20,24 +19,41 @@ public class TextBox extends FancyRect{
 		this.textcolor = color;
 		return this;
 	}
+//	float textsizex, textsizey;
+	float textsize;
+	public TextBox autoTextSize() {
+		main.pushStyle();
+		main.textSize(100);
+//		textsizex = sizex * 100 / main.textWidth(text);
+//		textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
+		// approx area. the constant is just 2. it just seems to work, there is no rationale
+		float textarea = 2 * main.textWidth(text) * (main.textAscent() + main.textDescent());
+		float boxarea = this.sizex * this.sizey;
+		float scaleby = (float) Math.sqrt(boxarea / textarea); 
+//		main.erase(x, y - sizey, sizex, sizey);
+
+//		float textsize = Main.min(textsizex, textsizey);
+		textsize = 100 * scaleby;
+		main.popStyle();
+		return this;
+	}
 	
 
+	
+	
 	public void draw() {
+		
 		main.pushStyle();
 		defaultCustomizations();
 		customize();
-		main.textSize(100);
-		float textsizex = sizex * 100 / main.textWidth(text);
-		float textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
-		System.out.println(textsizex + ", "+textsizey);
-//		main.erase(x, y - sizey, sizex, sizey);
 		main.rect(x, y, sizex, sizey);
-		float textsize = Main.min(textsizex, textsizey);
-
 		main.textSize(textsize);
 		main.fill(textcolor);
-		main.text(text, x, y/*);//*/, sizex, sizey);
+		main.text(text, x+5, y+5/*);//*/, sizex, sizey);
+
 		main.popStyle();
+		
 	}
+	
 
 }

@@ -10,6 +10,7 @@ import clickers.Button;
 import clickers.FancyButton;
 import clickers.IClickable;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
 import rect.FancyRect;
@@ -19,24 +20,36 @@ import rect.TextBox;
 public class Main extends PApplet{
 
 	public static Main main;
+	public static PGraphics pgraphics;
+	
+	{
+		
+		Main.main = this;
+		Rect.main = this;
+		Transform.main = this;
+		AnnotationProcessor.main = this;
+		pgraphics = new PGraphics();
+	}
+
 	public static void main(String[] args) {
 		PApplet.main("main.Main");
 	}
 	@Override
 	public void settings() {
 		this.size(1000, 1000);
-		Main.main = this;
-		Rect.main = this;
-		Transform.main = this;
-		AnnotationProcessor.main = this;
+
 		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
 
 	}
+
+	
 	@Peek(x=10,y=900)
 	public boolean clickedin;
 	@AddFixed
-	public TextBox tb = new TextBox(50,50,100,100,"The quick brown fox jumps over the lazy dog");
+	public TextBox tb = new TextBox(50,50,800,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
+
+	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).setFill(0xFFFF0000)) {
 		@Override
 		public void onMouse(MouseEvent e) {
@@ -68,6 +81,7 @@ public class Main extends PApplet{
 		main.translate(30, 14);
 		randMtx = main.getMatrix();
 		main.popMatrix();
+		tb.autoTextSize();
 	}
 
 	public <N extends Button<?>> N registerFlexibleClicker(N b) {
