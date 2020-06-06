@@ -29,7 +29,7 @@ public class Main extends PApplet{
 		Rect.main = this;
 		Transform.main = this;
 		AnnotationProcessor.main = this;
-		annotation = new AnnotationProcessor(main);
+		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
 
 	}

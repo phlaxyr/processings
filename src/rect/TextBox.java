@@ -1,5 +1,6 @@
 package rect;
 
+import annotation.Peek;
 import main.Main;
 
 public class TextBox extends FancyRect{
@@ -20,13 +21,14 @@ public class TextBox extends FancyRect{
 		return this;
 	}
 	
+
 	public void draw() {
 		main.pushStyle();
 		defaultCustomizations();
 		customize();
 		main.textSize(100);
-		float textsizex = sizex * 100 / main.textWidth(text);
-		float textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
+		textsizex = sizex * 100 / main.textWidth(text);
+		textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
 		System.out.println(textsizex + ", "+textsizey);
 //		main.erase(x, y - sizey, sizex, sizey);
 		main.rect(x, y, sizex, sizey);
