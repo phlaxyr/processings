@@ -27,8 +27,8 @@ public class TextBox extends FancyRect{
 		defaultCustomizations();
 		customize();
 		main.textSize(100);
-		textsizex = sizex * 100 / main.textWidth(text);
-		textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
+		float textsizex = sizex * 100 / main.textWidth(text);
+		float textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
 		System.out.println(textsizex + ", "+textsizey);
 //		main.erase(x, y - sizey, sizex, sizey);
 		main.rect(x, y, sizex, sizey);
