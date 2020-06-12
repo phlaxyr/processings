@@ -4,7 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import clickers.Button;
+import clickers.AbstractButton;
+import clickers.IClickable;
 import main.Main;
 import rect.Rect;
 
@@ -68,13 +69,19 @@ public class AnnotationProcessor {
 		}
 		@SuppressWarnings("rawtypes")
 		private void loadFlexible(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
-			if(Button.class.isAssignableFrom(f.getType())) main.registerFlexibleClicker((Button)f.get(o));
-			else if(Rect.class.isAssignableFrom(f.getType())) main.registerFlexibleRect((Rect)f.get(o));
+			if(AbstractButton.class.isAssignableFrom(f.getType())) main.registerFlexibleClicker((AbstractButton)f.get(o));
+			else {
+				if(Rect.class.isAssignableFrom(f.getType())) main.registerFlexibleRect((Rect)f.get(o));
+				if(IClickable.class.isAssignableFrom(f.getType())) main.registerFlexibleClickable((IClickable)f.get(o));
+			}
 		}
 		@SuppressWarnings("rawtypes")
 		private void loadFixed(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
-			if(Button.class.isAssignableFrom(f.getType())) main.registerFixedClicker((Button)f.get(o));
-			else if(Rect.class.isAssignableFrom(f.getType())) main.registerFixedRect((Rect)f.get(o));
+			if(AbstractButton.class.isAssignableFrom(f.getType())) main.registerFixedClicker((AbstractButton)f.get(o));
+			else {
+				if(Rect.class.isAssignableFrom(f.getType())) main.registerFixedRect((Rect)f.get(o));
+				if(IClickable.class.isAssignableFrom(f.getType())) main.registerFixedClickable((IClickable)f.get(o));
+			}
 	
 		}
 		public void run() { 

@@ -6,9 +6,10 @@ import java.util.List;
 import annotation.AnnotationProcessor;
 import annotation.AddFixed;
 import annotation.Peek;
-import clickers.Button;
+import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.IClickable;
+import clickers.ResponsiveButton;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix;
@@ -28,6 +29,7 @@ public class Main extends PApplet{
 		Rect.main = this;
 		Transform.main = this;
 		AnnotationProcessor.main = this;
+		Ap.p = this;
 		pgraphics = new PGraphics();
 	}
 
@@ -47,17 +49,18 @@ public class Main extends PApplet{
 	@Peek(x=10,y=900)
 	public boolean clickedin;
 	@AddFixed
-	public TextBox tb = new TextBox(50,50,800,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
-
+	public TextBox tb = new TextBox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
+	@AddFixed
+	public ResponsiveButton rb = (ResponsiveButton) new ResponsiveButton(35,300,50,50).setSelectedColor(0xFF303000).setFill(0xFF666600);
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).setFill(0xFFFF0000)) {
 		@Override
-		public void onMouse(MouseEvent e) {
+		public void onClick(MouseEvent e) {
 //			if(e.getAction() == MouseEvent.CLICK)
 			System.out.println("CLICK!" + e.getX() + ", " + e.getY());
 			clickedin = true;
 		}
-		public void onMouseOutside(MouseEvent e) {
+		public void onClickOutside(MouseEvent e) {
 			System.out.println("CLICKOUT!" + e.getX() + ", " + e.getY());
 			clickedin = false;
 		};
@@ -84,9 +87,22 @@ public class Main extends PApplet{
 		tb.autoTextSize();
 	}
 
-	public <N extends Button<?>> N registerFlexibleClicker(N b) {
+	public <N extends AbstractButton<?>> N registerFlexibleClicker(N b) {
 		rectsflexible.add(b.rect);
 		clickersflexible.add(b);
+		return b;
+	}
+	public <N extends AbstractButton<?>> N registerFixedClicker(N b) {
+		rectsfixed.add(b.rect);
+		clickersfixed.add(b);
+		return b;
+	}
+	public <N extends IClickable<?>> N registerFlexibleClickable(N b) {
+		clickersflexible.add(b);
+		return b;
+	}
+	public <N extends IClickable<?>> N registerFixedClickable(N b) {
+		clickersfixed.add(b);
 		return b;
 	}
 	
@@ -94,11 +110,7 @@ public class Main extends PApplet{
 		rectsflexible.add(b);
 		return b;
 	}
-	public <N extends Button<?>> N registerFixedClicker(N b) {
-		rectsfixed.add(b.rect);
-		clickersfixed.add(b);
-		return b;
-	}
+
 	
 	public <N extends Rect> N registerFixedRect(N b) {
 		rectsfixed.add(b);
@@ -204,18 +216,18 @@ public class Main extends PApplet{
 				float x = e.getX();
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouse(e);
+					rect.onClick(e);
 				} else {
-					rect.onMouseOutside(e);
+					rect.onClickOutside(e);
 				}
 			}
 			for (IClickable<?> rect : clickersflexible) {
 				float x = this.getMouseCoordX(e);
 				float y = this.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouse(e);
+					rect.onClick(e);
 				} else {
-					rect.onMouseOutside(e);
+					rect.onClickOutside(e);
 				}
 			}
 		}

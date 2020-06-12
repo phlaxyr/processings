@@ -2,7 +2,7 @@ package clickers;
 
 import rect.FancyRect;
 
-public class FancyButton extends Button<FancyRect>{
+public class FancyButton extends AbstractButton<FancyRect>{
 
 	public FancyButton(FancyRect rect) {
 		super(rect);

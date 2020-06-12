@@ -7,7 +7,7 @@ import rect.Rect;
  * @author phlaxyr
  *
  */
-public class SimpleButton extends Button<Rect>{
+public class SimpleButton extends AbstractButton<Rect>{
 
 	public SimpleButton(Rect rect) {
 		super(rect);

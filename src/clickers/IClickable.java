@@ -1,9 +1,10 @@
 package clickers;
 
-import rect.IShape;
+import rect.IDrawnShape;
+import rect.IShapeProvider;
 
-public interface IClickable<V extends IShape> extends IMouseHandler{
-	public V getShape();
+public interface IClickable<V extends IDrawnShape> extends IMouseHandler, IShapeProvider<V>{
+
 //	public void setElement(V v);
 	
 	

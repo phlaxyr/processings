@@ -1,7 +1,5 @@
 package rect;
 
-import processing.core.PGraphics;
-
 public class TextBox extends FancyRect{
 
 	public String text;
