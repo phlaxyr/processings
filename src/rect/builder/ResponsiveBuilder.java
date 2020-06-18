@@ -3,7 +3,6 @@ package rect.builder;
 import clickers.responsive.InteResponsiveButton;
 import clickers.responsive.ResponsiveButton;
 import clickers.responsive.ResponsiveRect;
-import rect.IBuilder;
 
 public class ResponsiveBuilder extends Builder implements IBuilder<ResponsiveButton<ResponsiveRect>, ResponsiveRect>{
 

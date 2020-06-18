@@ -1,4 +1,4 @@
-package clickers.objectmodel;
+package trickery;
 
 public interface IObjectModel {
 

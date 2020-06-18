@@ -1,32 +1,29 @@
-package rect;
+package rect.builder;
 
 import clickers.SimpleButton;
+import rect.Rect;
 
-public class RectBuilder implements IBuilder<SimpleButton, Rect> {
+public class RectBuilder extends Builder implements IBuilder<SimpleButton, Rect> {
 	public RectBuilder() {
 	}
 	public RectBuilder(int x, int y, int sizex, int sizey) {
 		this.pos(x, y).size(sizex, sizey);
 	}
-	int x, y;
+	@Override
 	public RectBuilder pos(int x, int y) {
-		this.x = x;
-		this.y = y;
-		return this;
+		return (RectBuilder) super.pos(x, y);
 	}
+	@Override
 	public RectBuilder pos(float x, float y) {
-		this.pos((int)x, (int)y);
-		return this;
+		return (RectBuilder) super.pos(x, y);
 	}
-	int sizex, sizey;
+	@Override
 	public RectBuilder size(int x, int y) {
-		this.sizex = x;
-		this.sizey = y;
-		return this;
+		return (RectBuilder) super.size(x, y);
 	}
+	@Override
 	public RectBuilder size(float x, float y) {
-		this.size((int)x, (int)y);
-		return this;
+		return (RectBuilder) super.size(x, y);
 	}
 	@Override
 	public Rect buildRect() {

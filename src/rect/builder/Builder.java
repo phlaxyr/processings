@@ -1,7 +1,5 @@
 package rect.builder;
 
-import rect.RectBuilder;
-
 public class Builder {
 	public static ResponsiveBuilder Responsive() {
 		return new ResponsiveBuilder();

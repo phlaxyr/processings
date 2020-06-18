@@ -5,7 +5,7 @@ import processing.event.MouseEvent;
 public interface IMouseHandler {
 	void onClick(MouseEvent e);
 	void onClickOutside(MouseEvent e);
-	public static final IMouseHandler NONE = new IMouseHandlerImpl() {
+	public static final IMouseHandler NONE = new IMouseHandler() {
 		@Override
 		public void onClick(MouseEvent e) {}
 		@Override

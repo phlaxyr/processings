@@ -1,5 +1,6 @@
-package clickers;
+package trickery;
 
+import clickers.IClickable;
 import processing.event.MouseEvent;
 import rect.Rect;
 

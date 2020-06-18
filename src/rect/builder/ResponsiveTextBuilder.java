@@ -3,7 +3,6 @@ package rect.builder;
 import clickers.responsive.InteResponsiveTextButton;
 import clickers.responsive.ResponsiveTextButton;
 import clickers.responsive.ResponsiveTextbox;
-import rect.IBuilder;
 
 public class ResponsiveTextBuilder extends Builder implements IBuilder<ResponsiveTextButton<ResponsiveTextbox>, ResponsiveTextbox>{
 
