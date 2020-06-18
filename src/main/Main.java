@@ -3,20 +3,24 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-import annotation.AnnotationProcessor;
 import annotation.AddFixed;
+import annotation.AnnotationProcessor;
 import annotation.Peek;
 import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.IClickable;
-import clickers.ResponsiveButton;
+import clickers.responsive.InteResponsiveButton;
+import clickers.responsive.InteResponsiveTextButton;
+import clickers.responsive.ResponsiveButton;
+import clickers.responsive.ResponsiveTextButton;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
-import rect.FancyRect;
 import rect.Rect;
-import rect.TextBox;
+import rect.Textbox;
+import rect.builder.Builder;
+import rect.builder.FancyRect;
 
 public class Main extends PApplet{
 
@@ -24,7 +28,7 @@ public class Main extends PApplet{
 	public static PGraphics pgraphics;
 	
 	{
-		
+		System.out.println("INIT BLOCK!");
 		Main.main = this;
 		Rect.main = this;
 		Transform.main = this;
@@ -42,41 +46,47 @@ public class Main extends PApplet{
 
 		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
-
 	}
 
 	
 	@Peek(x=10,y=900)
 	public boolean clickedin;
 	@AddFixed
-	public TextBox tb = new TextBox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
+	public Textbox tb = new Textbox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
 	@AddFixed
-	public ResponsiveButton rb = (ResponsiveButton) new ResponsiveButton(35,300,50,50).setSelectedColor(0xFF303000).setFill(0xFF666600);
+	public ResponsiveButton<?> rb = Builder.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	@AddFixed
+	public InteResponsiveButton rb2 = Builder.Responsive().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	@AddFixed
+	public ResponsiveTextButton<?> t1 = Builder.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	@AddFixed
+	public InteResponsiveTextButton t2 = Builder.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
 	
-	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).setFill(0xFFFF0000)) {
+	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
 		public void onClick(MouseEvent e) {
 //			if(e.getAction() == MouseEvent.CLICK)
-			System.out.println("CLICK!" + e.getX() + ", " + e.getY());
+//			System.out.println("CLICK!" + e.getX() + ", " + e.getY());
 			clickedin = true;
 		}
 		public void onClickOutside(MouseEvent e) {
-			System.out.println("CLICKOUT!" + e.getX() + ", " + e.getY());
+//			System.out.println("CLICKOUT!" + e.getX() + ", " + e.getY());
 			clickedin = false;
 		};
 	};
 	PMatrix randMtx;
 	@Override
 	public void setup() {
+		System.out.println("SETUP!");
 		super.setup();
 		this.surface.setResizable(true);
 		background(0x00FFFFFF); 
 		main.registerMethod("mouseEvent", this);
-		rectsflexible.add(buton1.rect);
-		clickersflexible.add(buton1);
-		registerFlexibleClicker(new FancyButton(100,200,16,16)).rect().setFill(0xFF00FF00);
-		registerFlexibleClicker(new FancyButton(new FancyRect(200,100,16,16).setFill(0xFF0000FF)));
-		registerFlexibleClicker(new FancyButton(new FancyRect(200,200,16,16).setFill(0xFF00FFFF)));
+		rectsmovable.add(buton1.rect);
+		clickersmovable.add(buton1);
+		registerMovableButton(new FancyButton(100,200,16,16)).rect().fill(0xFF00FF00);
+		registerMovableButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)));
+		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
 //		matrix = main.getMatrix();
 		transformer.setup();
 		main.pushMatrix();
@@ -84,51 +94,56 @@ public class Main extends PApplet{
 		main.translate(30, 14);
 		randMtx = main.getMatrix();
 		main.popMatrix();
-		tb.autoTextSize();
+//		tb.autoTextSize();
+		main.textWidth("hi");
+		for(Rect r : rects) r.onSetup();
+		for(IClickable<?> c : clickers) c.onSetup();
+		for(Rect r : rectsmovable) r.onSetup();
+		for(IClickable<?> c : clickersmovable) c.onSetup();
 	}
 
-	public <N extends AbstractButton<?>> N registerFlexibleClicker(N b) {
-		rectsflexible.add(b.rect);
-		clickersflexible.add(b);
+	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
+		rectsmovable.add(b.rect);
+		clickersmovable.add(b);
 		return b;
 	}
-	public <N extends AbstractButton<?>> N registerFixedClicker(N b) {
-		rectsfixed.add(b.rect);
-		clickersfixed.add(b);
+	public <N extends AbstractButton<?>> N registerButton(N b) {
+		rects.add(b.rect);
+		clickers.add(b);
 		return b;
 	}
-	public <N extends IClickable<?>> N registerFlexibleClickable(N b) {
-		clickersflexible.add(b);
+	public <N extends IClickable<?>> N registerMovableClickable(N b) {
+		clickersmovable.add(b);
 		return b;
 	}
-	public <N extends IClickable<?>> N registerFixedClickable(N b) {
-		clickersfixed.add(b);
+	public <N extends IClickable<?>> N registerClickable(N b) {
+		clickers.add(b);
 		return b;
 	}
 	
-	public <N extends Rect> N registerFlexibleRect(N b) {
-		rectsflexible.add(b);
+	public <N extends Rect> N registerMovableRect(N b) {
+		rectsmovable.add(b);
 		return b;
 	}
 
 	
-	public <N extends Rect> N registerFixedRect(N b) {
-		rectsfixed.add(b);
+	public <N extends Rect> N registerRect(N b) {
+		rects.add(b);
 		return b;
 	}
 	
 	
-	public List<Rect> rectsflexible = new ArrayList<>();
-	public List<IClickable<?>> clickersflexible = new ArrayList<>();
-	public List<Rect> rectsfixed = new ArrayList<>();
-	public List<IClickable<?>> clickersfixed = new ArrayList<>();
+	public List<Rect> rectsmovable = new ArrayList<>();
+	public List<IClickable<?>> clickersmovable = new ArrayList<>();
+	public List<Rect> rects = new ArrayList<>();
+	public List<IClickable<?>> clickers = new ArrayList<>();
 	@Override
 	public void draw() {
 		///*
 		main.background(255);
 		main.pushMatrix();
 		this.loadTfmMatrix();
-		for (Rect rect : rectsflexible) {
+		for (Rect rect : rectsmovable) {
 			rect.draw();
 		}
 		for(int i=-10000;i<10000;i+=100) {
@@ -138,7 +153,7 @@ public class Main extends PApplet{
 
 		main.popMatrix(); // Pop Matrix
 		
-		for (Rect rect : rectsfixed) {
+		for (Rect rect : rects) {
 			rect.draw();
 		}
 		
@@ -212,7 +227,7 @@ public class Main extends PApplet{
 		
 
 		if(e.getAction() == MouseEvent.PRESS ) {
-			for (IClickable<?> rect : clickersfixed) {
+			for (IClickable<?> rect : clickers) {
 				float x = e.getX();
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
@@ -221,7 +236,7 @@ public class Main extends PApplet{
 					rect.onClickOutside(e);
 				}
 			}
-			for (IClickable<?> rect : clickersflexible) {
+			for (IClickable<?> rect : clickersmovable) {
 				float x = this.getMouseCoordX(e);
 				float y = this.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {

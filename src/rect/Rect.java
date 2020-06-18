@@ -45,5 +45,10 @@ public class Rect implements IDrawnShape{
 		return this.x <= x && x < this.x + sizex && this.y <= y && y < this.y + sizey;
 		
 	}
+	@Override
+	public void onSetup() {
+		
+	}
+
 	
 }

@@ -1,15 +1,15 @@
 package clickers;
 
-import rect.TextBox;
+import rect.Textbox;
 
-public class TextButton extends AbstractButton<TextBox>{
+public class TextButton extends AbstractButton<Textbox>{
 
 	
-	public TextButton(TextBox rect) {
+	public TextButton(Textbox rect) {
 		super(rect);
 	}
 	public TextButton(int x, int y, int sizex, int sizey, String text) {
-		super(new TextBox(x, y, sizex, sizey, text));
+		super(new Textbox(x, y, sizex, sizey, text));
 	}
 
 }

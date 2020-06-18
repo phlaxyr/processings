@@ -1,7 +1,7 @@
 package clickers;
 
 import processing.event.MouseEvent;
-import rect.FancyRect;
+import rect.builder.FancyRect;
 
 public class FancyCoupledButton extends FancyRect implements IClickable<FancyCoupledButton>{
 

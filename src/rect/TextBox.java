@@ -1,25 +1,33 @@
 package rect;
 
-public class TextBox extends FancyRect{
+import rect.builder.FancyRect;
+
+public class Textbox extends FancyRect{
 
 	public String text;
-	public TextBox(int x, int y, int sizex, int sizey, String text) {
+	public Textbox(int x, int y, int sizex, int sizey, String text) {
 		super(x, y, sizex, sizey);
 		this.text = text;
-		this.setTextColor(0).setFill(255).setStroke(0); 
+		this.setTextColor(0).fill(255).stroke(0); 
 		// these can be overriden just by building with the factory pattern, as normal
 	}
 	
 	boolean flag = false;
 	int textcolor;
-	public TextBox setTextColor(int color) {
+	public Textbox setTextColor(int color) {
 		this.flag = true;
 		this.textcolor = color;
 		return this;
 	}
 //	float textsizex, textsizey;
-	float textsize;
-	public TextBox autoTextSize() {
+	
+	
+	float textsize = -1;
+	public Textbox setTextSize(int size) {
+		this.textsize = size;
+		return this;
+	}
+	public Textbox autoTextSize() {
 		main.pushStyle();
 		main.textSize(100);
 //		textsizex = sizex * 100 / main.textWidth(text);
@@ -35,15 +43,21 @@ public class TextBox extends FancyRect{
 		main.popStyle();
 		return this;
 	}
+	@Override
+	public void onSetup() {
+		super.onSetup();
+		if(textsize == -1) this.autoTextSize();
+	}
 	
 
 	
-	
+	@Override
 	public void draw() {
 		
 		main.pushStyle();
 		defaultCustomizations();
 		customize();
+		
 		main.rect(x, y, sizex, sizey);
 		main.textSize(textsize);
 		main.fill(textcolor);
@@ -52,6 +66,10 @@ public class TextBox extends FancyRect{
 		main.popStyle();
 		
 	}
+
+
+
+
 	
 
 }

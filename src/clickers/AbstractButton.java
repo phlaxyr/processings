@@ -2,8 +2,8 @@ package clickers;
 
 
 import processing.event.MouseEvent;
-import rect.FancyRect;
 import rect.Rect;
+import rect.builder.FancyRect;
 
 public class AbstractButton<T extends Rect> implements IButton, IClickable<T>{
 
@@ -13,6 +13,7 @@ public class AbstractButton<T extends Rect> implements IButton, IClickable<T>{
 	public AbstractButton(T rect) {
 		this.rect = rect;
 	}
+
 
 	@Override
 	public T getShape() {
@@ -41,6 +42,12 @@ public class AbstractButton<T extends Rect> implements IButton, IClickable<T>{
 	@Override
 	public boolean isPressed() {
 		return false;
+	}
+
+
+	@Override
+	public void onSetup() {
+		
 	}
 	
 
