@@ -2,11 +2,11 @@ package clickers.responsive;
 
 import clickers.AbstractButton;
 import processing.event.MouseEvent;
-public class ResponsiveButton<T extends ResponsiveRect> extends AbstractButton<T> implements ISelectionable{
+public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton<ResponsiveRect> implements ISelectionable{
 
 
 
-	public ResponsiveButton(T rect) {
+	public ResponsiveButton(ResponsiveRect rect) {
 		super(rect);
 	}
 

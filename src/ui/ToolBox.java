@@ -3,19 +3,24 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import clickers.TextButton;
+import clickers.responsive.ResponsiveTextbox;
 import main.Ap;
 import processing.event.MouseEvent;
+import rect.builder.FancyRect;
 
 
-public class ToolBox {
-	public TextButton a;
-	public TextButton b;
-	public TextButton activeTool;
-	public List<TextButton> tools = new ArrayList<>();
+public class ToolBox extends FancyRect{
+	public ToolBox(int x, int y, int sizex, int sizey) {
+		super(x, y, sizex, sizey);
+	}
+
+	public ToolboxButton a;
+	public ToolboxButton b;
+	public ToolboxButton activeTool;
+	public List<ToolboxButton> tools = new ArrayList<>();
 	{
-		a = new TextButton(0, 400, 100, 50, "Create Node");
-		b = new TextButton(100, 400, 100, 50, "Select Tool");
+		a = new ToolboxButton(new ResponsiveTextbox(0, 400, 100, 50, "Create Node"), this);
+		b = new ToolboxButton(new ResponsiveTextbox(100, 400, 100, 50, "Select Tool"), this);
 //			@Override
 //			public void onDepress() {
 //				super.onDepress();
@@ -31,7 +36,7 @@ public class ToolBox {
 		Ap.p.fill(255);
 //		nodeCreate.draw(flatdc);
 //		select.draw(flatdc);
-		for(TextButton b : tools) {
+		for(ToolboxButton b : tools) {
 			b.draw();
 		}
 		Ap.p.popStyle();
@@ -61,7 +66,7 @@ public class ToolBox {
 //			
 //			nodeCreate.setUnpressed();
 //		}
-		for(TextButton b : tools) {
+		for(ToolboxButton b : tools) {
 			boolean wasPressed = b.isPressed();
 			if(b.isPointWithin(e.getX(), e.getY())) {
 				b.onClick(e);
@@ -79,7 +84,7 @@ public class ToolBox {
 		
 	}
 	
-	public boolean isActive(TextButton b) {
+	public boolean isActive(ToolboxButton b) {
 		return b.equals(activeTool);
 	}
 //	public void mouseReleased() {

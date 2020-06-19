@@ -54,23 +54,20 @@ public class Main extends PApplet{
 	@AddFixed
 	public Textbox tb = new Textbox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
 	@AddFixed
-	public ResponsiveButton<?> rb = Builder.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveButton rb = Builder.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
 	@AddFixed
 	public InteResponsiveButton rb2 = Builder.Responsive().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
 	@AddFixed
-	public ResponsiveTextButton<?> t1 = Builder.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveTextButton t1 = Builder.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
 	@AddFixed
 	public InteResponsiveTextButton t2 = Builder.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
 		public void onClick(MouseEvent e) {
-//			if(e.getAction() == MouseEvent.CLICK)
-//			System.out.println("CLICK!" + e.getX() + ", " + e.getY());
 			clickedin = true;
 		}
 		public void onClickOutside(MouseEvent e) {
-//			System.out.println("CLICKOUT!" + e.getX() + ", " + e.getY());
 			clickedin = false;
 		};
 	};

@@ -13,7 +13,18 @@ public class Builder {
 	public static RectBuilder Rect() {
 		return new RectBuilder();
 	}
-	
+	public static ResponsiveBuilder Responsive(int x, int y, int sizex, int sizey) {
+		return new ResponsiveBuilder(x, y, sizex, sizey);
+	}
+	public static ResponsiveTextBuilder ResponsiveText(int x, int y, int sizex, int sizey, String str) {
+		return new ResponsiveTextBuilder(x, y, sizex, sizey, str);
+	}
+	public static FancyBuilder FancyRect(int x, int y, int sizex, int sizey) {
+		return new FancyBuilder(x, y, sizex, sizey);
+	}
+	public static RectBuilder Rect(int x, int y, int sizex, int sizey) {
+		return new RectBuilder(x, y, sizex, sizey);
+	}
 	
 	int x, y;
 	public Builder pos(int x, int y) {

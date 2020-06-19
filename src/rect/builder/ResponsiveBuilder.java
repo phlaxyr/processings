@@ -4,7 +4,7 @@ import clickers.responsive.InteResponsiveButton;
 import clickers.responsive.ResponsiveButton;
 import clickers.responsive.ResponsiveRect;
 
-public class ResponsiveBuilder extends Builder implements IBuilder<ResponsiveButton<ResponsiveRect>, ResponsiveRect>{
+public class ResponsiveBuilder extends Builder implements IBuilder<ResponsiveButton, ResponsiveRect>{
 
 	public ResponsiveBuilder() {
 	}
@@ -29,8 +29,8 @@ public class ResponsiveBuilder extends Builder implements IBuilder<ResponsiveBut
 	}
 	
 	@Override
-	public ResponsiveButton<ResponsiveRect> buildButton() {
-		return new ResponsiveButton<ResponsiveRect>(this.buildRect());
+	public ResponsiveButton buildButton() {
+		return new ResponsiveButton(this.buildRect());
 	}
 	@Override
 	public ResponsiveRect buildRect() {

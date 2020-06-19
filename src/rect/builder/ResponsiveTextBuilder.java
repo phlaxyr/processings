@@ -4,9 +4,13 @@ import clickers.responsive.InteResponsiveTextButton;
 import clickers.responsive.ResponsiveTextButton;
 import clickers.responsive.ResponsiveTextbox;
 
-public class ResponsiveTextBuilder extends Builder implements IBuilder<ResponsiveTextButton<ResponsiveTextbox>, ResponsiveTextbox>{
+public class ResponsiveTextBuilder extends Builder implements IBuilder<ResponsiveTextButton, ResponsiveTextbox>{
 
-
+	public ResponsiveTextBuilder() {}
+	public ResponsiveTextBuilder(int x, int y, int sizex, int sizey, String str2) {
+		this();
+		this.pos(x, y).size(sizex, sizey).text(str2);
+	}
 	@Override
 	public ResponsiveTextBuilder pos(int x, int y) {
 		return (ResponsiveTextBuilder) super.pos(x, y);
@@ -30,8 +34,8 @@ public class ResponsiveTextBuilder extends Builder implements IBuilder<Responsiv
 	}
 	
 	@Override
-	public ResponsiveTextButton<ResponsiveTextbox> buildButton() {
-		return new ResponsiveTextButton<ResponsiveTextbox>(this.buildRect());
+	public ResponsiveTextButton buildButton() {
+		return new ResponsiveTextButton(this.buildRect());
 	}
 	@Override
 	public ResponsiveTextbox buildRect() {
