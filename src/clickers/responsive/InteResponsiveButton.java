@@ -4,7 +4,7 @@ import clickers.IIntegratedSelectionable;
 import processing.event.MouseEvent;
 import rect.builder.FancyRect;
 
-public class InteResponsiveButton extends FancyRect implements IIntegratedSelectionable, ISelectionable {
+public class InteResponsiveButton extends FancyRect implements IIntegratedSelectionable {
 	public InteResponsiveButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
@@ -48,5 +48,10 @@ public class InteResponsiveButton extends FancyRect implements IIntegratedSelect
 			main.fill(select_fill);
 		}
 	}
+
+
+
+
+
 
 }

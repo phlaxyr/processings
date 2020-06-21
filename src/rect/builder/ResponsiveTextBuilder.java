@@ -4,7 +4,7 @@ import clickers.responsive.InteResponsiveTextButton;
 import clickers.responsive.ResponsiveTextButton;
 import clickers.responsive.ResponsiveTextbox;
 
-public class ResponsiveTextBuilder extends Builder implements IBuilder<ResponsiveTextButton, ResponsiveTextbox>{
+public class ResponsiveTextBuilder extends New implements IBuilder<ResponsiveTextButton, ResponsiveTextbox>{
 
 	public ResponsiveTextBuilder() {}
 	public ResponsiveTextBuilder(int x, int y, int sizex, int sizey, String str2) {

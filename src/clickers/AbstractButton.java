@@ -5,7 +5,7 @@ import processing.event.MouseEvent;
 import rect.Rect;
 import rect.builder.FancyRect;
 
-public class AbstractButton<T extends Rect> implements IButton, IClickable<T>{
+public class AbstractButton<T extends Rect> implements IClickable<T>{
 
 
 	public T rect;
@@ -37,11 +37,6 @@ public class AbstractButton<T extends Rect> implements IButton, IClickable<T>{
 	@Override
 	public void onClickOutside(MouseEvent e) {
 		
-	}
-
-	@Override
-	public boolean isPressed() {
-		return false;
 	}
 
 

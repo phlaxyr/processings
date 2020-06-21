@@ -19,8 +19,9 @@ import processing.core.PMatrix;
 import processing.event.MouseEvent;
 import rect.Rect;
 import rect.Textbox;
-import rect.builder.Builder;
+import rect.builder.New;
 import rect.builder.FancyRect;
+import ui.ToolBox;
 
 public class Main extends PApplet{
 
@@ -54,13 +55,15 @@ public class Main extends PApplet{
 	@AddFixed
 	public Textbox tb = new Textbox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
 	@AddFixed
-	public ResponsiveButton rb = Builder.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveButton rb = New.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
 	@AddFixed
-	public InteResponsiveButton rb2 = Builder.Responsive().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	public InteResponsiveButton rb2 = New.Responsive().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
 	@AddFixed
-	public ResponsiveTextButton t1 = Builder.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveTextButton t1 = New.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
 	@AddFixed
-	public InteResponsiveTextButton t2 = Builder.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	public InteResponsiveTextButton t2 = New.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	@AddFixed
+	public ToolBox toolb = new ToolBox(0, 800, 1000, 70);
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
@@ -166,7 +169,7 @@ public class Main extends PApplet{
 
 		//*/
 		main.pushStyle();
-		main.erase(10, 900 - 32, 500000, 500000);
+//		main.erase(10, 900 - 32, 500000, 500000);
 		main.fill(0);
 		main.fill(100);
 		main.textSize(32);
@@ -223,7 +226,7 @@ public class Main extends PApplet{
 	public void mouseEvent(MouseEvent e) {
 		
 
-		if(e.getAction() == MouseEvent.PRESS ) {
+		if(e.getAction() == MouseEvent.RELEASE ) {
 			for (IClickable<?> rect : clickers) {
 				float x = e.getX();
 				float y = e.getY();

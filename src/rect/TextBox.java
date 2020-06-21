@@ -22,7 +22,7 @@ public class Textbox extends FancyRect{
 //	float textsizex, textsizey;
 	
 	
-	float textsize = -1;
+	float textsize = 0;
 	public Textbox setTextSize(int size) {
 		this.textsize = size;
 		return this;
@@ -46,7 +46,7 @@ public class Textbox extends FancyRect{
 	@Override
 	public void onSetup() {
 		super.onSetup();
-		if(textsize == -1) this.autoTextSize();
+		if(textsize == 0) this.autoTextSize();
 	}
 	
 
@@ -59,7 +59,7 @@ public class Textbox extends FancyRect{
 		customize();
 		
 		main.rect(x, y, sizex, sizey);
-		main.textSize(textsize);
+		if(textsize != 0) main.textSize(textsize);
 		main.fill(textcolor);
 		main.text(text, x+5, y+5/*);//*/, sizex, sizey);
 

@@ -2,7 +2,7 @@ package rect.builder;
 
 import clickers.FancyButton;
 
-public class FancyBuilder extends Builder implements IBuilder<FancyButton, FancyRect> {
+public class FancyBuilder extends New implements IBuilder<FancyButton, FancyRect> {
 
 	public FancyBuilder() {
 	}

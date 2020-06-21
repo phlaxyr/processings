@@ -3,7 +3,7 @@ package rect.builder;
 import clickers.SimpleButton;
 import rect.Rect;
 
-public class RectBuilder extends Builder implements IBuilder<SimpleButton, Rect> {
+public class RectBuilder extends New implements IBuilder<SimpleButton, Rect> {
 	public RectBuilder() {
 	}
 	public RectBuilder(int x, int y, int sizex, int sizey) {

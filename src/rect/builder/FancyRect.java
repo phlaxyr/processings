@@ -9,7 +9,7 @@ public class FancyRect extends Rect implements IFancyRect{
 	}
 	public FancyRect(FancyBuilder b) {
 		this(b.x, b.y, b.sizex, b.sizey);
-		Builder.match(this, b);
+		New.match(this, b);
 	}
 
 	

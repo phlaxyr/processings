@@ -1,12 +1,11 @@
 package ui;
 
-import clickers.responsive.ResponsiveTextButton;
-import clickers.responsive.ResponsiveTextbox;
+import clickers.responsive.InteResponsiveTextButton;
 
-public class ToolboxButton extends ResponsiveTextButton{
+public class ToolboxButton extends InteResponsiveTextButton{
 	public ToolBox tb;
-	public ToolboxButton(ResponsiveTextbox rect, ToolBox tb) {
-		super(rect);
+	public ToolboxButton(int x, int y, int sizex, int sizey, String txt, ToolBox tb) {
+		super(x, y, sizex, sizey, txt);
 		this.tb = tb;
 	}
 	

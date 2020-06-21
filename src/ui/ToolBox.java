@@ -3,13 +3,13 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import clickers.responsive.ResponsiveTextbox;
+import clickers.IClickable;
 import main.Ap;
 import processing.event.MouseEvent;
 import rect.builder.FancyRect;
 
 
-public class ToolBox extends FancyRect{
+public class ToolBox extends FancyRect implements IClickable<ToolBox>{
 	public ToolBox(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
@@ -19,8 +19,10 @@ public class ToolBox extends FancyRect{
 	public ToolboxButton activeTool;
 	public List<ToolboxButton> tools = new ArrayList<>();
 	{
-		a = new ToolboxButton(new ResponsiveTextbox(0, 400, 100, 50, "Create Node"), this);
-		b = new ToolboxButton(new ResponsiveTextbox(100, 400, 100, 50, "Select Tool"), this);
+		a = new ToolboxButton(x + 10, y + 10, 100, 50, "Create Node", this);
+		a.selectedFill(0xFF00C8C8);
+		b = new ToolboxButton(x + 10 + 100 + 10, y + 10, 100, 50, "Select Tool", this);
+		b.selectedFill(0xFF00C8C8);
 //			@Override
 //			public void onDepress() {
 //				super.onDepress();
@@ -30,7 +32,17 @@ public class ToolBox extends FancyRect{
 		tools.add(a);
 		tools.add(b);
 	}
+	
+	
+	@Override
+	public void onSetup() {
+//		a.onSetup();
+//		a.rect.onSetup();
+//		b.onSetup();
+//		b.rect.onSetup();
+	}
 	public void draw(){
+		super.draw();
 		Ap.p.pushStyle();
 
 		Ap.p.fill(255);
@@ -66,8 +78,9 @@ public class ToolBox extends FancyRect{
 //			
 //			nodeCreate.setUnpressed();
 //		}
+		System.out.print("CLICK!");
 		for(ToolboxButton b : tools) {
-			boolean wasPressed = b.isPressed();
+			boolean wasPressed = b.isSelected();
 			if(b.isPointWithin(e.getX(), e.getY())) {
 				b.onClick(e);
 				activeTool = wasPressed ? null : b;
@@ -92,6 +105,21 @@ public class ToolBox extends FancyRect{
 ////		select.mouseReleased();
 //
 //	}
+
+
+
+
+	@Override
+	public void onClickOutside(MouseEvent e) {		
+	}
+
+
+
+
+	@Override
+	public ToolBox getShape() {
+		return this;
+	}
 	
 //	/**
 //	 * Depends on rectmode
