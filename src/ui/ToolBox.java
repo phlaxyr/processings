@@ -9,30 +9,55 @@ import processing.event.MouseEvent;
 import rect.builder.FancyRect;
 
 
-public class ToolBox extends FancyRect implements IClickable<ToolBox>{
-	public ToolBox(int x, int y, int sizex, int sizey) {
-		super(x, y, sizex, sizey);
+/**
+ * @author phlaxyr
+ *
+ */
+public class Toolbox extends FancyRect implements IClickable<Toolbox>{
+	public Toolbox(int x, int y, int sizex, int sizey) {
+ 		super(x, y, sizex, sizey);
 	}
 
-	public ToolboxButton a;
-	public ToolboxButton b;
+	public ToolboxButton a, b, c;
 	public ToolboxButton activeTool;
 	public List<ToolboxButton> tools = new ArrayList<>();
+	protected int buttonXSize = 100;
+	protected int buttonYSize = 50;
+	protected int buttonXMargin = 10;
+	protected int buttonYMargin = 10;
+	protected int defaultSelectedFill = 0xFF00C8C8;
+	protected int defaultTextSize = 15;
+	protected int counter =0 ;
 	{
-		a = new ToolboxButton(x + 10, y + 10, 100, 50, "Create Node", this);
-		a.selectedFill(0xFF00C8C8);
-		b = new ToolboxButton(x + 10 + 100 + 10, y + 10, 100, 50, "Select Tool", this);
-		b.selectedFill(0xFF00C8C8);
+//		a = new ToolboxButton(x + 10, y + 10, 100, 50, "Create Node", this);
+//		a.selectedFill(0xFF00C8C8);
+		a = this.autoAddButton("Create Node");
+		b = this.autoAddButton("Select Tool");
+		c = this.autoAddButton("Move Tool");
 //			@Override
 //			public void onDepress() {
 //				super.onDepress();
 //				Ap.p.stm.select(null);
 //			}
+		System.out.print("");
 		
-		tools.add(a);
-		tools.add(b);
 	}
 	
+
+	public ToolboxButton autoAddButton(String str) {
+		ToolboxButton b = new ToolboxButton(
+				x+buttonXMargin + counter * (buttonXSize + buttonXMargin), 
+				y+buttonYMargin, 
+				buttonXSize,
+				buttonYSize, 
+				str, 
+				this);
+//		b.setTextSize(10);
+		b.selectedFill(defaultSelectedFill).setTextSize(defaultTextSize);
+		counter++;
+		tools.add(b);
+		return b;
+	}
 	
 	@Override
 	public void onSetup() {
@@ -40,6 +65,10 @@ public class ToolBox extends FancyRect implements IClickable<ToolBox>{
 //		a.rect.onSetup();
 //		b.onSetup();
 //		b.rect.onSetup();
+		for(ToolboxButton b : tools) {
+			b.onSetup();
+			b.getShape().onSetup();
+		}
 	}
 	public void draw(){
 		super.draw();
@@ -50,6 +79,7 @@ public class ToolBox extends FancyRect implements IClickable<ToolBox>{
 //		select.draw(flatdc);
 		for(ToolboxButton b : tools) {
 			b.draw();
+//			System.out.print(b.text);
 		}
 		Ap.p.popStyle();
 	}
@@ -117,7 +147,7 @@ public class ToolBox extends FancyRect implements IClickable<ToolBox>{
 
 
 	@Override
-	public ToolBox getShape() {
+	public Toolbox getShape() {
 		return this;
 	}
 	

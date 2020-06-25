@@ -59,7 +59,11 @@ public class Textbox extends FancyRect{
 		customize();
 		
 		main.rect(x, y, sizex, sizey);
-		if(textsize != 0) main.textSize(textsize);
+		if(textsize == 0.0) {
+			throw new NullPointerException("textsize 0.0. onSetup() was not called");
+		} else {
+			main.textSize(textsize);
+		}
 		main.fill(textcolor);
 		main.text(text, x+5, y+5/*);//*/, sizex, sizey);
 

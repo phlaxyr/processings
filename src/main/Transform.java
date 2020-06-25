@@ -24,8 +24,8 @@ public class Transform {
 //				System.out.println("PRESS");
 				this.mousepressinitx = this.getMouseCoordX(e);
 				this.mousepressinity = this.getMouseCoordY(e);
-				main.debugClear();
-				main.debug(mousepressinitx, mousepressinity);
+				Debug.debugClear();
+				Debug.debug(mousepressinitx, mousepressinity);
 				drag_flag = true;
 			} else if (e.getAction() == MouseEvent.DRAG) {
 //				System.out.println("DRAG");
@@ -50,8 +50,8 @@ public class Transform {
 				x = e.getX(); y = e.getY();
 				scaleFromPoint(x, y, e.getCount() == -1 ? 1.1f: 0.9f);
 				f = screenXYToCoordXY(e.getX(), e.getY());
-				main.debugClear();
-				main.debug(f);
+				Debug.debugClear();
+				Debug.debug(f);
 				updateTfmMtx();
 				return; 
 			}

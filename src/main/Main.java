@@ -21,7 +21,7 @@ import rect.Rect;
 import rect.Textbox;
 import rect.builder.New;
 import rect.builder.FancyRect;
-import ui.ToolBox;
+import ui.Toolbox;
 
 public class Main extends PApplet{
 
@@ -63,7 +63,7 @@ public class Main extends PApplet{
 	@AddFixed
 	public InteResponsiveTextButton t2 = New.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
 	@AddFixed
-	public ToolBox toolb = new ToolBox(0, 800, 1000, 70);
+	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
@@ -74,7 +74,6 @@ public class Main extends PApplet{
 			clickedin = false;
 		};
 	};
-	PMatrix randMtx;
 	@Override
 	public void setup() {
 		System.out.println("SETUP!");
@@ -89,48 +88,14 @@ public class Main extends PApplet{
 		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
 //		matrix = main.getMatrix();
 		transformer.setup();
-		main.pushMatrix();
-//		main.scale(1);
-		main.translate(30, 14);
-		randMtx = main.getMatrix();
-		main.popMatrix();
 //		tb.autoTextSize();
-		main.textWidth("hi");
 		for(Rect r : rects) r.onSetup();
 		for(IClickable<?> c : clickers) c.onSetup();
 		for(Rect r : rectsmovable) r.onSetup();
 		for(IClickable<?> c : clickersmovable) c.onSetup();
 	}
 
-	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
-		rectsmovable.add(b.rect);
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends AbstractButton<?>> N registerButton(N b) {
-		rects.add(b.rect);
-		clickers.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerMovableClickable(N b) {
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerClickable(N b) {
-		clickers.add(b);
-		return b;
-	}
-	
-	public <N extends Rect> N registerMovableRect(N b) {
-		rectsmovable.add(b);
-		return b;
-	}
 
-	
-	public <N extends Rect> N registerRect(N b) {
-		rects.add(b);
-		return b;
-	}
 	
 	
 	public List<Rect> rectsmovable = new ArrayList<>();
@@ -139,75 +104,48 @@ public class Main extends PApplet{
 	public List<IClickable<?>> clickers = new ArrayList<>();
 	@Override
 	public void draw() {
-		///*
+		
 		main.background(255);
-		main.pushMatrix();
+		main.pushMatrix(); 
 		this.loadTfmMatrix();
+		// start movable
+		
+
 		for (Rect rect : rectsmovable) {
 			rect.draw();
 		}
-		for(int i=-10000;i<10000;i+=100) {
-			main.line(-100000, i, 100000, i);
-			main.line(i, -100000, i, 100000);
-		}
+		Demo.gridLines(); // grid lines
 
-		main.popMatrix(); // Pop Matrix
+		// end movable
+		main.popMatrix(); 
+
+		
+		// start fixed
 		
 		for (Rect rect : rects) {
 			rect.draw();
 		}
-		
-		main.pushStyle(); // debug points
-		main.strokeWeight(10);
-		main.stroke(200,200,200);
-		for(int i=0;i<tempxs.size();i++) {
-			float tx = coordXToScreenX(tempxs.get(i));
-			float ty = coordYToScreenY(tempys.get(i));
-			main.point(tx, ty);
-		}
-		main.popStyle();
+		Debug.debugPoints(); // debug points
 
-		//*/
 		main.pushStyle();
 //		main.erase(10, 900 - 32, 500000, 500000);
 		main.fill(0);
 		main.fill(100);
 		main.textSize(32);
 		main.text(Boolean.toString(clickedin), 100, 900); // text
-		float[] f = main.coordXYToScreenXY(300, 300);
-		float x = f[0]; float y = f[1];
+
 		
 		annotation.run();
 		
-		main.strokeWeight(20);
-		main.stroke(220,220,220);
-		main.point(x, y);
+		Demo.movablePointAt300300();
 		
-		main.strokeWeight(14);
-		main.stroke(255,0,0); // red
-		main.point(300, 300);
-		main.stroke(255,0,255); //magenta
-		main.point(300 * sf(), 300 * sf()); // matches the scale
-		main.point(300 * sf() - p1x(), 300 * sf() - p1y()); // is correct, 
-		
-		main.stroke(0,255,0); //green
-		main.point(300-p1x(), 300-p1y());
-		main.point(sf()*(300-p1x()), sf()*(300-p1y()));
-		
-		main.strokeWeight(8);
-		main.stroke(0,0,255); //blue
-//		main.translate(-nox, -noy);
-//		main.point(300, 300);
-		main.scale(sf()); // translations
-		main.point(300, 300);
-		main.translate(-p1x() / sf(), -p1y() / sf());
-		main.point(300, 300);
-//		main.point((300 * scale_factor)-nox, (300 * scale_factor)-noy);
+		Debug.transformationDebugPoints();
+		//		main.point((300 * scale_factor)-nox, (300 * scale_factor)-noy);
 		main.popStyle();
 
 //		noLoop();
-		//*/
 		
+		// end fixed
 
 		
 	}
@@ -263,21 +201,6 @@ public class Main extends PApplet{
 	public void loadTfmMatrix() {
 		main.setMatrix(this.getTfmMatrix());
 	}
-	public void debug(float[] f) {
-		this.debug(f[0], f[1]);
-	}
-	List<Float> tempxs = new ArrayList<>();
-	List<Float> tempys = new ArrayList<>();
-	public void debug(float x, float y) {
-		tempxs.add(x);
-		tempys.add(y);
-	}
-
-	public void debugClear() {
-		tempxs.clear();
-		tempys.clear();
-	}
-	
 //	public void scaleFromPoint(float x, float y, float scaleby) {
 //		scale_factor = scaleby;
 //		p1x = x*(1 - scaleby);
@@ -347,4 +270,33 @@ public class Main extends PApplet{
 		main.rect(posx, posy, sizex, sizey);
 	}
 
+	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
+		rectsmovable.add(b.rect);
+		clickersmovable.add(b);
+		return b;
+	}
+	public <N extends AbstractButton<?>> N registerButton(N b) {
+		rects.add(b.rect);
+		clickers.add(b);
+		return b;
+	}
+	public <N extends IClickable<?>> N registerMovableClickable(N b) {
+		clickersmovable.add(b);
+		return b;
+	}
+	public <N extends IClickable<?>> N registerClickable(N b) {
+		clickers.add(b);
+		return b;
+	}
+	
+	public <N extends Rect> N registerMovableRect(N b) {
+		rectsmovable.add(b);
+		return b;
+	}
+
+	
+	public <N extends Rect> N registerRect(N b) {
+		rects.add(b);
+		return b;
+	}
 }
