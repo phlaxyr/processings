@@ -35,6 +35,13 @@ public class FancyRect extends Rect implements IFancyRect{
 		this.select_fill = fill;
 		return this;
 	}
+	protected boolean s2flag = false;
+	protected int selectstroke;
+	public FancyRect selectedStroke(int stroke) { 
+		s2flag = true;
+		this.selectstroke = stroke;
+		return this;
+	}
 	
 	@Override
 	public void draw() {

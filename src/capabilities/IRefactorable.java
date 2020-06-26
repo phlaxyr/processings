@@ -1,5 +1,5 @@
 package capabilities;
 
-public interface IMovable {
+public interface IRefactorable {
 	void moveTo(int x, int y);
 }

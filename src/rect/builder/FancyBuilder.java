@@ -43,9 +43,13 @@ public class FancyBuilder extends New implements IBuilder<FancyButton, FancyRect
 	@Override
 	public FancyBuilder stroke(int fill) {
 		return (FancyBuilder) super.stroke(fill);
-	}	@Override
+	}
+	@Override
 	public FancyBuilder selectedFill(int fill) {
 		return (FancyBuilder) super.selectedFill(fill);
 	}
-	
+	@Override
+	public FancyBuilder selectedStroke(int stroke) {
+		return (FancyBuilder) super.selectedStroke(stroke);
+	}
 }

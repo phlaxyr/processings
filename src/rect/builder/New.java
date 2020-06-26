@@ -1,6 +1,8 @@
 package rect.builder;
 
-public class New {
+import rect.IFancinessCustomizable;
+
+public class New implements IFancinessCustomizable<New>{
 	public static ResponsiveBuilder Responsive() {
 		return new ResponsiveBuilder();
 	}
@@ -53,14 +55,14 @@ public class New {
 	
 	protected int fill;
 	protected boolean fill_flag = false;
-	protected New fill(int fill) {
+	public New fill(int fill) {
 		this.fill_flag = true;
 		this.fill = fill;
 		return this;
 	}
 	protected int stroke;
 	protected boolean stroke_flag = false;
-	protected New stroke(int stroke) {
+	public New stroke(int stroke) {
 		this.stroke_flag = true;
 		this.stroke = stroke;
 		return this;
@@ -68,9 +70,16 @@ public class New {
 	
 	protected boolean f2flag = false;
 	protected int select_fill;
-	protected New selectedFill(int fill) { 
+	public New selectedFill(int fill) { 
 		f2flag = true;
 		this.select_fill = fill;
+		return this;
+	}
+	protected boolean s2flag = false;
+	protected int selectstroke;
+	public New selectedStroke(int stroke) { 
+		s2flag = true;
+		this.selectstroke = stroke;
 		return this;
 	}
 
@@ -82,6 +91,8 @@ public class New {
 		r.select_fill = b.select_fill;
 //		System.out.println(r.select_fill);System.out.println(this.select_fill);
 		r.f2flag = b.f2flag;
+		r.selectstroke = b.selectstroke;
+		r.s2flag = b.s2flag;
 	}
 	
 }

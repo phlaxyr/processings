@@ -53,7 +53,7 @@ public class Toolbox extends FancyRect implements IClickable<Toolbox>{
 				str, 
 				this);
 //		b.setTextSize(10);
-		b.selectedFill(defaultSelectedFill).setTextSize(defaultTextSize);
+		b.selectedFill(defaultSelectedFill).setTextSize(defaultTextSize).selectedStroke(0xFFFF0000);
 		counter++;
 		tools.add(b);
 		return b;

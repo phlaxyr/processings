@@ -2,15 +2,14 @@ package clickers.responsive;
 
 import clickers.IIntegratedSelectionable;
 import processing.event.MouseEvent;
-import rect.builder.FancyRect;
 
-public class InteResponsiveButton extends FancyRect implements IIntegratedSelectionable {
+public class InteResponsiveButton extends AbstractResponsiveRect implements IIntegratedSelectionable {
 	public InteResponsiveButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
 	
 	
-	
+
 
 
 	@Override
@@ -38,17 +37,6 @@ public class InteResponsiveButton extends FancyRect implements IIntegratedSelect
 	public boolean isSelected() {
 		return isSelected;
 	}
-
-	@Override
-	public void defaultCustomizations() {
-		
-		super.defaultCustomizations();
-//		if(getModel().isSelected() && f2flag) {
-		if(isSelected() && f2flag) {
-			main.fill(select_fill);
-		}
-	}
-
 
 
 

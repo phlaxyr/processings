@@ -2,13 +2,11 @@ package clickers.responsive;
 
 import clickers.IIntegratedSelectionable;
 import processing.event.MouseEvent;
-import rect.Textbox;
 
-public class InteResponsiveTextButton extends Textbox implements IIntegratedSelectionable, ISelectionable {
+public class InteResponsiveTextButton extends AbstractResponsiveTextbox implements IIntegratedSelectionable, ISelectionable {
 
 	
-	
-	
+
 
 
 	public InteResponsiveTextButton(int x, int y, int sizex, int sizey, String text) {
@@ -42,15 +40,6 @@ public class InteResponsiveTextButton extends Textbox implements IIntegratedSele
 		return isSelected;
 	}
 
-	@Override
-	public void defaultCustomizations() {
-		
-		super.defaultCustomizations();
-//		if(getModel().isSelected() && f2flag) {
-		if(isSelected() && f2flag) {
-			main.fill(select_fill);
-		}
-	}
 
 
 
