@@ -17,10 +17,10 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
+import rect.FancyRect;
+import rect.New;
 import rect.Rect;
 import rect.Textbox;
-import rect.builder.New;
-import rect.builder.FancyRect;
 import ui.Toolbox;
 
 public class Main extends PApplet{
@@ -48,20 +48,19 @@ public class Main extends PApplet{
 		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
 	}
-
 	
 	@Peek(x=10,y=900)
 	public boolean clickedin;
 	@AddFixed
 	public Textbox tb = new Textbox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
 	@AddFixed
-	public ResponsiveButton rb = New.Responsive().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveButton rb = New.Builder().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
 	@AddFixed
-	public InteResponsiveButton rb2 = New.Responsive().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	public InteResponsiveButton rb2 = New.Builder().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
 	@AddFixed
-	public ResponsiveTextButton t1 = New.ResponsiveText().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).buildButton();
+	public ResponsiveTextButton t1 = New.Builder().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public InteResponsiveTextButton t2 = New.ResponsiveText().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).buildInteButton();
+	public InteResponsiveTextButton t2 = New.Builder().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	

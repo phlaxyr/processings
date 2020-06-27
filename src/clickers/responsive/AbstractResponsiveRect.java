@@ -1,10 +1,10 @@
 package clickers.responsive;
 
-import rect.builder.FancyBuilder;
-import rect.builder.FancyRect;
+import rect.FancyRect;
+import rect.New;
 
 public abstract class AbstractResponsiveRect extends FancyRect implements IRequireSelectionable{
-	public AbstractResponsiveRect(FancyBuilder b) {
+	public AbstractResponsiveRect(New b) {
 		super(b);
 	}
 

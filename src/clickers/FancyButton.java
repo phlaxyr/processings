@@ -1,6 +1,6 @@
 package clickers;
 
-import rect.builder.FancyRect;
+import rect.FancyRect;
 
 public class FancyButton extends AbstractButton<FancyRect>{
 

@@ -1,15 +1,12 @@
-package rect.builder;
-
-import rect.IFancyRect;
-import rect.Rect;
+package rect;
 
 public class FancyRect extends Rect implements IFancyRect{
 	public FancyRect(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
-	public FancyRect(FancyBuilder b) {
-		this(b.x, b.y, b.sizex, b.sizey);
-		New.match(this, b);
+	public FancyRect(New builder) {
+		this(builder.x, builder.y, builder.sizex, builder.sizey);
+		New.match(this, builder);
 	}
 
 	
@@ -65,9 +62,6 @@ public class FancyRect extends Rect implements IFancyRect{
 	}
 	public static FancyRect build(int x, int y, int sizex, int sizey) {
 		return new FancyRect(x, y, sizex, sizey);
-	}
-	public static FancyBuilder builder() {
-		return new FancyBuilder();
 	}
 	
 }

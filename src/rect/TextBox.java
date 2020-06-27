@@ -1,7 +1,5 @@
 package rect;
 
-import rect.builder.FancyRect;
-
 public class Textbox extends FancyRect{
 
 	public String text;

@@ -2,8 +2,8 @@ package clickers;
 
 
 import processing.event.MouseEvent;
+import rect.FancyRect;
 import rect.Rect;
-import rect.builder.FancyRect;
 
 public class AbstractButton<T extends Rect> implements IClickable<T>{
 
