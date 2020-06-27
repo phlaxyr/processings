@@ -1,8 +1,8 @@
 package ui;
 
-import clickers.responsive.InteResponsiveTextButton;
+import clickers.responsive.InteResponsiveButton;
 
-public class ToolboxButton extends InteResponsiveTextButton{
+public class ToolboxButton extends InteResponsiveButton{
 	public Toolbox tb;
 	public ToolboxButton(int x, int y, int sizex, int sizey, String txt, Toolbox tb) {
 		super(x, y, sizex, sizey, txt);
@@ -11,7 +11,6 @@ public class ToolboxButton extends InteResponsiveTextButton{
 	
 	@Override
 	public ToolboxButton selectedFill(int fill) {
-		// TODO Auto-generated method stub
 		return (ToolboxButton) super.selectedFill(fill);
 	}
 	

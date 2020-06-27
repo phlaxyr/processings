@@ -3,13 +3,9 @@ package rect;
 import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.SimpleButton;
-import clickers.TextButton;
 import clickers.responsive.InteResponsiveButton;
-import clickers.responsive.InteResponsiveTextButton;
 import clickers.responsive.ResponsiveButton;
 import clickers.responsive.ResponsiveRect;
-import clickers.responsive.ResponsiveTextButton;
-import clickers.responsive.ResponsiveTextbox;
 
 public class New implements IFancinessCustomizable<New>{
 	
@@ -35,13 +31,13 @@ public class New implements IFancinessCustomizable<New>{
 	public FancyButton FancyButton() {
 		return new FancyButton(this.FancyRect());
 	}
-	public Textbox Textbox() {
-		Textbox t = new Textbox(x, y, sizex, sizey, str);
+	public FancyRect Textbox() {
+		FancyRect t = new FancyRect(x, y, sizex, sizey, str);
 		New.match(t, this);
 		return t; 
 	}
-	public TextButton TextButton() {
-		return new TextButton(this.Textbox());
+	public FancyButton TextButton() {
+		return new FancyButton(this.Textbox());
 	}
 	public ResponsiveButton ResponsiveButton() {
 		return new ResponsiveButton(this.ResponsiveRect());
@@ -57,19 +53,19 @@ public class New implements IFancinessCustomizable<New>{
 		return r;
 	}
 	
-	public ResponsiveTextButton ResponsiveTextButton() {
-		return new ResponsiveTextButton(this.ResponsiveTextbox());
+	public ResponsiveButton ResponsiveTextButton() {
+		return new ResponsiveButton(this.ResponsiveTextbox());
 	}
-	public ResponsiveTextbox ResponsiveTextbox() {
+	public ResponsiveRect ResponsiveTextbox() {
 		if(str == null) str = "";
-		ResponsiveTextbox r = new ResponsiveTextbox(x, y, sizex, sizey, str);
+		ResponsiveRect r = new ResponsiveRect(x, y, sizex, sizey, str);
 		match(r, this);
 //		System.out.print("HI!");
 		return r;
 	}
 	
-	public InteResponsiveTextButton InteResponsiveTextButton() {
-		InteResponsiveTextButton r = new InteResponsiveTextButton(x, y, sizex, sizey, str);
+	public InteResponsiveButton InteResponsiveTextButton() {
+		InteResponsiveButton r = new InteResponsiveButton(x, y, sizex, sizey, str);
 		match(r, this);
 		return r;
 	}
@@ -187,11 +183,11 @@ public class New implements IFancinessCustomizable<New>{
 	}
 	public static class BuildNewResponsiveText extends New {
 		@Override
-		public ResponsiveTextbox Rect() {
+		public ResponsiveRect Rect() {
 			return super.ResponsiveTextbox();
 		}
 		@Override
-		public ResponsiveTextButton Button() {
+		public ResponsiveButton Button() {
 			return super.ResponsiveTextButton();
 		}
 		

@@ -7,9 +7,11 @@ public abstract class AbstractResponsiveRect extends FancyRect implements IRequi
 	public AbstractResponsiveRect(New b) {
 		super(b);
 	}
-
 	public AbstractResponsiveRect(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
+	}
+	public AbstractResponsiveRect(int x, int y, int sizex, int sizey, String text) {
+		super(x, y, sizex, sizey, text);
 	}
 
 	@Override

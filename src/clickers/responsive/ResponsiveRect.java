@@ -6,6 +6,13 @@ public class ResponsiveRect/* <R extends ISelectableModel> */ extends AbstractRe
 	public ResponsiveRect(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
+	public ResponsiveRect(int x, int y, int sizex, int sizey, String text) {
+		super(x, y, sizex, sizey, text);
+	}
+
+
+
+
 
 	public ISelectionable info;
 

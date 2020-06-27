@@ -42,10 +42,23 @@ public class FancyRect extends Rect implements IFancyRect{
 	
 	@Override
 	public void draw() {
+		
 		main.pushStyle();
 		defaultCustomizations();
 		customize();
 		super.draw();
+		
+		if(hasText) {
+			if(textsize == 0.0) {
+				throw new NullPointerException("textsize 0.0. onSetup() was not called");
+			} else {
+				main.textSize(textsize);
+			}
+			main.fill(textcolor);
+			main.text(text, x+5, y+5/*);//*/, sizex, sizey);
+		}
+
+
 		main.popStyle();
 	}
 	@Override
@@ -60,8 +73,63 @@ public class FancyRect extends Rect implements IFancyRect{
 	public void customize() {
 		
 	}
-	public static FancyRect build(int x, int y, int sizex, int sizey) {
-		return new FancyRect(x, y, sizex, sizey);
+	
+	// imported from TextBox
+	boolean hasText = false;
+	String text;
+	public FancyRect(int x, int y, int sizex, int sizey, String text) {
+		this(x, y, sizex, sizey);
+		this.setText(text);
+		this.setTextColor(0).fill(255).stroke(0); 
+		// these can be overriden just by building with the factory pattern, as normal
 	}
+	public FancyRect setText(String text) {
+		this.text = text;
+		hasText = true;
+		return this;
+	}
+	
+	boolean t1 = false;
+	int textcolor;
+	public FancyRect setTextColor(int color) {
+		this.t1 = true;
+		this.textcolor = color;
+		return this;
+	}
+//	float textsizex, textsizey;
+	
+	
+	float textsize = 0;
+	public FancyRect setTextSize(int size) {
+		this.textsize = size;
+		return this;
+	}
+	public FancyRect autoTextSize() {
+		main.pushStyle();
+		main.textSize(100);
+//		textsizex = sizex * 100 / main.textWidth(text);
+//		textsizey = sizey * 100 / (main.textAscent() + main.textDescent());
+		// approx area. the constant is just 2. it just seems to work, there is no rationale
+		float textarea = 2 * main.textWidth(text) * (main.textAscent() + main.textDescent());
+		float boxarea = this.sizex * this.sizey;
+		float scaleby = (float) Math.sqrt(boxarea / textarea); 
+//		main.erase(x, y - sizey, sizex, sizey);
+
+//		float textsize = Main.min(textsizex, textsizey);
+		textsize = 100 * scaleby;
+		main.popStyle();
+		return this;
+	}
+	@Override
+	public void onSetup() {
+		super.onSetup();
+		if(hasText && textsize == 0) this.autoTextSize();
+	}
+	
+
+	
+
+	
+	
 	
 }

@@ -10,6 +10,12 @@ public class FancyCoupledButton extends FancyRect implements IClickable<FancyCou
 	public FancyCoupledButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
+	
+	
+	public FancyCoupledButton(int x, int y, int sizex, int sizey, String text) {
+		super(x, y, sizex, sizey, text);
+	}
+
 
 	@Override
 	public void onClick(MouseEvent e) {

@@ -10,9 +10,7 @@ import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.IClickable;
 import clickers.responsive.InteResponsiveButton;
-import clickers.responsive.InteResponsiveTextButton;
 import clickers.responsive.ResponsiveButton;
-import clickers.responsive.ResponsiveTextButton;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix;
@@ -58,9 +56,9 @@ public class Main extends PApplet{
 	@AddFixed
 	public InteResponsiveButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
 	@AddFixed
-	public ResponsiveTextButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
+	public ResponsiveButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public InteResponsiveTextButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
+	public InteResponsiveButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
