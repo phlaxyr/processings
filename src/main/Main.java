@@ -54,13 +54,13 @@ public class Main extends PApplet{
 	@AddFixed
 	public Textbox tb = new Textbox(50,50,200,200,"The quick brown fox jumps over the lazy dog");//.autoTextSize();
 	@AddFixed
-	public ResponsiveButton rb = New.Builder().pos(35,300).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
+	public ResponsiveButton rb = New.at(35,300,50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
 	@AddFixed
-	public InteResponsiveButton rb2 = New.Builder().pos(35,360).size(50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
+	public InteResponsiveButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
 	@AddFixed
-	public ResponsiveTextButton t1 = New.Builder().pos(95,300).size(50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
+	public ResponsiveTextButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public InteResponsiveTextButton t2 = New.Builder().pos(95,360).size(50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
+	public InteResponsiveTextButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	

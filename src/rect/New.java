@@ -17,22 +17,9 @@ public class New implements IFancinessCustomizable<New>{
 	public New(int x, int y, int sizex, int sizey) {
 		this.of(x, y, sizex, sizey);
 	}
-	public static New Builder() {
-		return new New();
+	public static New at(int x, int y, int sizex, int sizey) {
+		return new New(x, y, sizex, sizey);
 	}
-	public static BuildNewFancy Fancy() {
-		return new BuildNewFancy();
-	}
-	public static BuildNewText Text() {
-		return new BuildNewText();
-	}
-	public static BuildNewResponsive Responsive() {
-		return new BuildNewResponsive();
-	}
-	public static BuildNewResponsiveText ResponsiveText() {
-		return new BuildNewResponsiveText();
-	}
-
 	// the overloaded methods
 	public Rect Rect() {
 		return new Rect(x, y, sizex, sizey);
@@ -170,6 +157,22 @@ public class New implements IFancinessCustomizable<New>{
 		r.f2flag = b.f2flag;
 		r.selectstroke = b.selectstroke;
 		r.s2flag = b.s2flag;
+	}
+	
+	public static New Builder() {
+		return new New();
+	}
+	public static BuildNewFancy Fancy() {
+		return new BuildNewFancy();
+	}
+	public static BuildNewText Text() {
+		return new BuildNewText();
+	}
+	public static BuildNewResponsive Responsive() {
+		return new BuildNewResponsive();
+	}
+	public static BuildNewResponsiveText ResponsiveText() {
+		return new BuildNewResponsiveText();
 	}
 	public static class BuildNewResponsive extends New {
 		@Override
