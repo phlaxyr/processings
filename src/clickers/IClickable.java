@@ -2,9 +2,9 @@ package clickers;
 
 import rect.IDrawnShape;
 import rect.IShapeProvider;
-import trickery.IRegistered;
+import trickery.ISetupable;
 
-public interface IClickable<V extends IDrawnShape> extends IMouseHandler, IShapeProvider<V>, IRegistered {
+public interface IClickable<V extends IDrawnShape> extends IMouseHandler, IShapeProvider<V>, ISetupable {
 
 //	public void setElement(V v);
 	

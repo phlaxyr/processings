@@ -2,8 +2,9 @@ package main;
 
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
+import trickery.ISetupable;
 
-public class Transform {
+public class Transform implements ISetupable{
 	public static Main main;
 //	public static Transform transform = new Transform();
 	
@@ -12,7 +13,7 @@ public class Transform {
 //	public float tempx, tempy = 0;
 	private boolean drag_flag = false;
 	private float mousepressinitx, mousepressinity;
-	public void setup() {
+	public void onSetup() {
 		this.matrix = main.getMatrix();
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import annotation.AddFixed;
 import annotation.AnnotationProcessor;
 import annotation.Peek;
+import annotation.Setup;
 import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.IClickable;
@@ -19,7 +20,9 @@ import rect.FancyRect;
 import rect.New;
 import rect.Rect;
 import rect.Textbox;
+import trickery.ISetupable;
 import ui.Toolbox;
+import ui.ToolboxLogic;
 
 public class Main extends PApplet{
 
@@ -84,17 +87,22 @@ public class Main extends PApplet{
 		registerMovableButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)));
 		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
 //		matrix = main.getMatrix();
-		transformer.setup();
+
 //		tb.autoTextSize();
+		setupDependents();
+	}
+
+	public void setupDependents() {
+		transformer.onSetup();
 		for(Rect r : rects) r.onSetup();
 		for(IClickable<?> c : clickers) c.onSetup();
 		for(Rect r : rectsmovable) r.onSetup();
 		for(IClickable<?> c : clickersmovable) c.onSetup();
+		for(ISetupable r : soleRegistrees) r.onSetup();
 	}
 
-
 	
-	
+	public List<ISetupable> soleRegistrees = new ArrayList<>();
 	public List<Rect> rectsmovable = new ArrayList<>();
 	public List<IClickable<?>> clickersmovable = new ArrayList<>();
 	public List<Rect> rects = new ArrayList<>();
@@ -158,6 +166,8 @@ public class Main extends PApplet{
 //	public PMatrix matrix;
 //	public float tempx, tempy = 0;
 	public Transform transformer = new Transform();
+	@Setup
+	public ToolboxLogic selector = new ToolboxLogic();
 	public void mouseEvent(MouseEvent e) {
 		
 
@@ -167,6 +177,7 @@ public class Main extends PApplet{
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
 					rect.onClick(e);
+					selector.onElementClicked(e, rect, false);
 				} else {
 					rect.onClickOutside(e);
 				}
@@ -176,6 +187,7 @@ public class Main extends PApplet{
 				float y = this.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {
 					rect.onClick(e);
+					selector.onElementClicked(e, rect, true);
 				} else {
 					rect.onClickOutside(e);
 				}
@@ -295,5 +307,10 @@ public class Main extends PApplet{
 	public <N extends Rect> N registerRect(N b) {
 		rects.add(b);
 		return b;
+	}
+	
+	public <R extends ISetupable> R registerSetupable(R r) {
+		soleRegistrees.add(r);
+		return r;
 	}
 }

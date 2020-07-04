@@ -4,9 +4,11 @@ import clickers.responsive.InteResponsiveButton;
 
 public class ToolboxButton extends InteResponsiveButton{
 	public Toolbox tb;
-	public ToolboxButton(int x, int y, int sizex, int sizey, String txt, Toolbox tb) {
+	public ToolboxState state;
+	public ToolboxButton(Toolbox tb, int x, int y, int sizex, int sizey, String txt, ToolboxState state) {
 		super(x, y, sizex, sizey, txt);
 		this.tb = tb;
+		this.state = state;
 	}
 	
 	@Override
@@ -15,6 +17,11 @@ public class ToolboxButton extends InteResponsiveButton{
 	}
 	
 
+	public ToolboxState getCorrespondingState() {
+		return state;
+	}
+	
+	public static final ToolboxButton NONE = new ToolboxButton(null, 0, 0, 0, 0 ,"", ToolboxState.NONE);
 
 
 }

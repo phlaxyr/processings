@@ -1,5 +1,5 @@
 package trickery;
 
-public interface IRegistered {
+public interface ISetupable {
 	void onSetup();
 }

@@ -19,7 +19,7 @@ public class Toolbox extends FancyRect implements IClickable<Toolbox>{
 	}
 
 	public ToolboxButton a, b, c;
-	public ToolboxButton activeTool;
+	public ToolboxButton activeTool = ToolboxButton.NONE;
 	public List<ToolboxButton> tools = new ArrayList<>();
 	protected int buttonXSize = 100;
 	protected int buttonYSize = 50;
@@ -31,27 +31,27 @@ public class Toolbox extends FancyRect implements IClickable<Toolbox>{
 	{
 //		a = new ToolboxButton(x + 10, y + 10, 100, 50, "Create Node", this);
 //		a.selectedFill(0xFF00C8C8);
-		a = this.autoAddButton("Create Node");
-		b = this.autoAddButton("Select Tool");
-		c = this.autoAddButton("Move Tool");
+		a = this.autoAddButton("Create Node", ToolboxState.CREATE);
+		b = this.autoAddButton("Select Tool", ToolboxState.SELECT);
+		c = this.autoAddButton("Move Tool", ToolboxState.MOVE);
 //			@Override
 //			public void onDepress() {
 //				super.onDepress();
 //				Ap.p.stm.select(null);
 //			}
-		System.out.print("");
+//		System.out.print("");
 		
 	}
 	
 
-	public ToolboxButton autoAddButton(String str) {
-		ToolboxButton b = new ToolboxButton(
+	public ToolboxButton autoAddButton(String str, ToolboxState state) {
+		ToolboxButton b = new ToolboxButton(this,
 				x+buttonXMargin + counter * (buttonXSize + buttonXMargin), 
 				y+buttonYMargin, 
 				buttonXSize,
 				buttonYSize, 
 				str, 
-				this);
+				state);
 //		b.setTextSize(10);
 		b.selectedFill(defaultSelectedFill).setTextSize(defaultTextSize).selectedStroke(0xFFFF0000);
 		counter++;
@@ -113,8 +113,9 @@ public class Toolbox extends FancyRect implements IClickable<Toolbox>{
 			boolean wasPressed = b.isSelected();
 			if(b.isPointWithin(e.getX(), e.getY())) {
 				b.onClick(e);
-				activeTool = wasPressed ? null : b;
 				
+				activeTool = wasPressed ? ToolboxButton.NONE : b;
+				main.selector.onElementClicked(e, activeTool, false);
 			} else b.onClickOutside(e);
 //			if(b.buttonClicked(x, y)) { 
 				

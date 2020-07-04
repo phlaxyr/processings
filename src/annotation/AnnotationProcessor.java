@@ -8,6 +8,7 @@ import clickers.AbstractButton;
 import clickers.IClickable;
 import main.Main;
 import rect.Rect;
+import trickery.ISetupable;
 
 public class AnnotationProcessor {
 	public static Main main;
@@ -39,7 +40,11 @@ public class AnnotationProcessor {
 				for(Field f : fs) {
 					if(f.isAnnotationPresent(Peek.class)) {
 						this.peeks.add(f);
-					} else if(f.isAnnotationPresent(AddMovable.class)) {
+					}
+					if(f.isAnnotationPresent(Setup.class)) {
+						this.loadSetupable(f, o);
+					}
+					if(f.isAnnotationPresent(AddMovable.class)) {
 						loadFlexible(f, o);
 					} else if(f.isAnnotationPresent(AddFixed.class)) {
 						loadFixed(f, o);
@@ -77,13 +82,25 @@ public class AnnotationProcessor {
 		}
 		@SuppressWarnings("rawtypes")
 		private void loadFixed(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
-			if(AbstractButton.class.isAssignableFrom(f.getType())) main.registerButton((AbstractButton)f.get(o));
-			else {
-				if(Rect.class.isAssignableFrom(f.getType())) main.registerRect((Rect)f.get(o));
-				if(IClickable.class.isAssignableFrom(f.getType())) main.registerClickable((IClickable)f.get(o));
+			if(AbstractButton.class.isAssignableFrom(f.getType())) {
+				main.registerButton((AbstractButton)f.get(o));
+			} else {
+				if(Rect.class.isAssignableFrom(f.getType())) {
+					main.registerRect((Rect)f.get(o));
+				}
+				if(IClickable.class.isAssignableFrom(f.getType())) {
+					main.registerClickable((IClickable)f.get(o));
+				}
 			}
 	
 		}
+
+		private void loadSetupable(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
+			if(ISetupable.class.isAssignableFrom(f.getType())) {
+				main.registerSetupable((ISetupable) f.get(o));
+			}
+		}
+		
 		public void run() { 
 			int i=0;
 			try {
