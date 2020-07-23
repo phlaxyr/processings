@@ -1,6 +1,6 @@
 package clickers.responsive;
 
 public interface IRequireSelectionable {
-	void linkSelectionable(ISelectionable s);
+	void acknowledgeContainer(ISelectionable s);
 	ISelectionable getSelectable();
 }

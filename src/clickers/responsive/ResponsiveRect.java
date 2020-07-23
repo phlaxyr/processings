@@ -17,7 +17,7 @@ public class ResponsiveRect/* <R extends ISelectableModel> */ extends AbstractRe
 	public ISelectionable info;
 
 	@Override
-	public void linkSelectionable(ISelectionable r) {
+	public void acknowledgeContainer(ISelectionable r) {
 		this.info = r;
 	}
 

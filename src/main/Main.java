@@ -17,12 +17,13 @@ import processing.core.PGraphics;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
 import rect.FancyRect;
+import rect.IDrawnShape;
 import rect.New;
 import rect.Rect;
 import rect.Textbox;
 import trickery.ISetupable;
 import ui.Toolbox;
-import ui.ToolboxLogic;
+import ui.ToolboxManager;
 
 public class Main extends PApplet{
 
@@ -167,7 +168,7 @@ public class Main extends PApplet{
 //	public float tempx, tempy = 0;
 	public Transform transformer = new Transform();
 	@Setup
-	public ToolboxLogic selector = new ToolboxLogic();
+	public ToolboxManager selector = new ToolboxManager();
 	public void mouseEvent(MouseEvent e) {
 		
 
@@ -177,7 +178,7 @@ public class Main extends PApplet{
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
 					rect.onClick(e);
-					selector.onElementClicked(e, rect, false);
+					selector.onMouse(e, rect, false);
 				} else {
 					rect.onClickOutside(e);
 				}
@@ -187,17 +188,34 @@ public class Main extends PApplet{
 				float y = this.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {
 					rect.onClick(e);
-					selector.onElementClicked(e, rect, true);
+					selector.onMouse(e, rect, true);
 				} else {
 					rect.onClickOutside(e);
 				}
 			}
+		} else {
+			selector.onMouse(e, null, false);
 		}
 		transformer.mouseEvent(e);
 
 		
 //		loop();
 	}
+
+	public IClickable<?> getOneElementUnder(float x, float y) {
+		for (IClickable<?> rect : clickers) {
+			if(rect.getShape().isPointWithin(x, y)) {
+				return rect;
+			}
+		}
+		for (IClickable<?> rect : clickersmovable) {
+			if(rect.getShape().isPointWithin(x, y)) {
+				return rect;
+			}
+		}
+		return null;
+	}
+
 	public void updateTfmMatrix() {
 		transformer.updateTfmMtx();
 	}

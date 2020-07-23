@@ -13,6 +13,13 @@ public class Transform implements ISetupable{
 //	public float tempx, tempy = 0;
 	private boolean drag_flag = false;
 	private float mousepressinitx, mousepressinity;
+	public float scale_factor; 
+	public float p1x, p1y; 
+	{
+		scale_factor = 1;
+		p1x = p1y = 0;
+	}
+	
 	public void onSetup() {
 		this.matrix = main.getMatrix();
 	}
@@ -78,12 +85,7 @@ public class Transform implements ISetupable{
 		this.p1y = f2*p1y + m2y*(f2-1);
 	}
 	
-	public float scale_factor; 
-	public float p1x, p1y; 
-	{
-		scale_factor = 1;
-		p1x = p1y = 0;
-	}
+
 	public float getMouseCoordX() {
 		return screenXToCoordX(main.mouseX);
 	}

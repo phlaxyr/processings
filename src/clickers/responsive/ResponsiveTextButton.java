@@ -10,7 +10,7 @@ public class ResponsiveTextButton extends AbstractButton<ResponsiveTextbox> impl
 		super(rect); 
 	}
 	{
-		rect.linkSelectionable(this);
+		rect.acknowledgeContainer(this);
 	}
 
 	

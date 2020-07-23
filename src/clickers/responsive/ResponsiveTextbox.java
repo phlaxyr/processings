@@ -9,7 +9,7 @@ public class ResponsiveTextbox extends AbstractResponsiveTextbox implements IReq
 	ISelectionable clickInfo;
 
 	@Override
-	public void linkSelectionable(ISelectionable info) {
+	public void acknowledgeContainer(ISelectionable info) {
 		this.clickInfo = info;
 	}
 

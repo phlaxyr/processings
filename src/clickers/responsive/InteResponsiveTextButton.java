@@ -24,7 +24,7 @@ public class InteResponsiveTextButton extends AbstractResponsiveTextbox implemen
 	@Override
 	public void onClick(MouseEvent e) {
 		isSelected = true;
-		System.out.print("oi");
+//		System.out.print("oi");
 	}
 
 

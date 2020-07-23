@@ -20,6 +20,6 @@ public interface IIntegratedSelectionable
 		return this;
 	}
 
-	default void linkSelectionable(ISelectionable s) {
+	default void acknowledgeContainer(ISelectionable s) {
 	}
 }

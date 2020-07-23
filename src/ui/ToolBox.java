@@ -115,7 +115,7 @@ public class Toolbox extends FancyRect implements IClickable<Toolbox>{
 				b.onClick(e);
 				
 				activeTool = wasPressed ? ToolboxButton.NONE : b;
-				main.selector.onElementClicked(e, activeTool, false);
+//				main.selector.onMouse(e, activeTool, false);
 			} else b.onClickOutside(e);
 //			if(b.buttonClicked(x, y)) { 
 				

@@ -1,8 +1,9 @@
 package clickers.responsive;
 
 import clickers.AbstractButton;
+
 import processing.event.MouseEvent;
-public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton<ResponsiveRect> implements ISelectionable{
+public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton<ResponsiveRect> implements ISelectionable {
 
 
 
@@ -11,7 +12,7 @@ public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButt
 	}
 
 	{
-		rect.linkSelectionable(this);
+		rect.acknowledgeContainer(this);
 	}
 
 	
@@ -35,8 +36,6 @@ public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButt
 	public boolean isSelected() {
 		return isSelected;
 	}
-	
-
 
 	
 	
