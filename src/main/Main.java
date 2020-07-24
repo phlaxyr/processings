@@ -1,43 +1,28 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import annotation.AddFixed;
 import annotation.AnnotationProcessor;
 import annotation.Peek;
 import annotation.Setup;
-import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.IClickable;
 import clickers.responsive.InteResponsiveButton;
 import clickers.responsive.ResponsiveButton;
 import processing.core.PApplet;
-import processing.core.PGraphics;
-import processing.core.PMatrix;
 import processing.event.MouseEvent;
 import rect.FancyRect;
-import rect.IDrawnShape;
 import rect.New;
 import rect.Rect;
 import rect.Textbox;
-import trickery.ISetupable;
 import ui.Toolbox;
 import ui.ToolboxManager;
 
-public class Main extends PApplet{
+public class Main extends MainFuncs{
 
 	public static Main main;
-	public static PGraphics pgraphics;
-	
+//	public static PGraphics pgraphics;
 	{
-		System.out.println("INIT BLOCK!");
-		Main.main = this;
-		Rect.main = this;
-		Transform.main = this;
-		AnnotationProcessor.main = this;
-		Ap.p = this;
-		pgraphics = new PGraphics();
+		MainFuncs.initBlock(this);
 	}
 
 	public static void main(String[] args) {
@@ -46,7 +31,6 @@ public class Main extends PApplet{
 	@Override
 	public void settings() {
 		this.size(1000, 1000);
-
 		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
 	}
@@ -78,10 +62,9 @@ public class Main extends PApplet{
 	@Override
 	public void setup() {
 		System.out.println("SETUP!");
-		super.setup();
 		this.surface.setResizable(true);
-		background(0x00FFFFFF); 
 		main.registerMethod("mouseEvent", this);
+		background(0x00FFFFFF); 
 		rectsmovable.add(buton1.rect);
 		clickersmovable.add(buton1);
 		registerMovableButton(new FancyButton(100,200,16,16)).rect().fill(0xFF00FF00);
@@ -90,24 +73,9 @@ public class Main extends PApplet{
 //		matrix = main.getMatrix();
 
 //		tb.autoTextSize();
-		setupDependents();
+		MainFuncs.setupDependents(this);
 	}
-
-	public void setupDependents() {
-		transformer.onSetup();
-		for(Rect r : rects) r.onSetup();
-		for(IClickable<?> c : clickers) c.onSetup();
-		for(Rect r : rectsmovable) r.onSetup();
-		for(IClickable<?> c : clickersmovable) c.onSetup();
-		for(ISetupable r : soleRegistrees) r.onSetup();
-	}
-
 	
-	public List<ISetupable> soleRegistrees = new ArrayList<>();
-	public List<Rect> rectsmovable = new ArrayList<>();
-	public List<IClickable<?>> clickersmovable = new ArrayList<>();
-	public List<Rect> rects = new ArrayList<>();
-	public List<IClickable<?>> clickers = new ArrayList<>();
 	@Override
 	public void draw() {
 		
@@ -166,7 +134,7 @@ public class Main extends PApplet{
 	public boolean doTransformations = true;
 //	public PMatrix matrix;
 //	public float tempx, tempy = 0;
-	public Transform transformer = new Transform();
+
 	@Setup
 	public ToolboxManager selector = new ToolboxManager();
 	public void mouseEvent(MouseEvent e) {
@@ -201,7 +169,6 @@ public class Main extends PApplet{
 		
 //		loop();
 	}
-
 	public IClickable<?> getOneElementUnder(float x, float y) {
 		for (IClickable<?> rect : clickers) {
 			if(rect.getShape().isPointWithin(x, y)) {
@@ -216,119 +183,4 @@ public class Main extends PApplet{
 		return null;
 	}
 
-	public void updateTfmMatrix() {
-		transformer.updateTfmMtx();
-	}
-	public PMatrix getTfmMatrix() {
-		return transformer.matrix;
-	}
-	public void setTfmMatrix(PMatrix to) {
-		transformer.matrix = to;
-	}
-	public void loadTfmMatrix() {
-		main.setMatrix(this.getTfmMatrix());
-	}
-//	public void scaleFromPoint(float x, float y, float scaleby) {
-//		scale_factor = scaleby;
-//		p1x = x*(1 - scaleby);
-//		p1y = y*(1 - scaleby);
-//	}
-//	public void scaleFromPoint(float x, float y, float sf) {
-//		scale_factor = sf;
-//		p1x = x * (sf - 1);
-//		p1y = y * (sf - 1);
-//	}
-	public void scaleFromPoint(float m2x, float m2y, float f2) {
-		transformer.scaleFromPoint(m2x, m2y, f2);
-	}
-	
-	public float p1x() {
-		return transformer.p1x;
-	}
-	public float p1y() {
-		return transformer.p1y;
-	}
-	public float sf() {
-		return transformer.scale_factor;
-	}
-	public void setsf(float to) {
-		this.transformer.scale_factor = to;
-	}
-	public void setp1(float x, float y) {
-		this.transformer.p1x = x;
-		this.transformer.p1y = y;
-	}
-	
-	public float getMouseCoordX() {
-		return screenXToCoordX(main.mouseX);
-	}
-	public float getMouseCoordX(MouseEvent e) {
-		return screenXToCoordX(e.getX());
-	}
-	public float getMouseCoordY() {
-		return screenYToCoordY(main.mouseY);
-	}
-	public float getMouseCoordY(MouseEvent e) {
-		return screenYToCoordY(e.getY());
-	}
-	
-	public float[] screenXYToCoordXY(float x, float y) {
-		return transformer.screenXYToCoordXY(x, y);
-	}
-	public float[] coordXYToScreenXY(float x, float y) {
-		return transformer.coordXYToScreenXY(x, y);
-	}
-	public float screenXToCoordX(float x) {
-		return transformer.screenXToCoordX(x);
-	}
-	public float screenYToCoordY(float y) {
-		return transformer.screenYToCoordY(y);
-	}
-	public float coordXToScreenX(float x) {
-		return transformer.coordXToScreenX(x);
-	}
-	public float coordYToScreenY(float y) {
-		return transformer.coordYToScreenY(y);
-	}
-	public void erase(int posx, int posy, int sizex, int sizey) {
-		main.pushStyle();
-		main.fill(255);
-		main.stroke(255);
-		main.rect(posx, posy, sizex, sizey);
-	}
-
-	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
-		rectsmovable.add(b.rect);
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends AbstractButton<?>> N registerButton(N b) {
-		rects.add(b.rect);
-		clickers.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerMovableClickable(N b) {
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerClickable(N b) {
-		clickers.add(b);
-		return b;
-	}
-	
-	public <N extends Rect> N registerMovableRect(N b) {
-		rectsmovable.add(b);
-		return b;
-	}
-
-	
-	public <N extends Rect> N registerRect(N b) {
-		rects.add(b);
-		return b;
-	}
-	
-	public <R extends ISetupable> R registerSetupable(R r) {
-		soleRegistrees.add(r);
-		return r;
-	}
 }
