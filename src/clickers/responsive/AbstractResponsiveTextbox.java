@@ -1,6 +1,6 @@
 package clickers.responsive;
 
-import rect.Textbox;
+import shape.Textbox;
 
 public abstract class AbstractResponsiveTextbox extends Textbox implements IRequireSelectionable{
  

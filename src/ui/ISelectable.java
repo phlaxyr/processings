@@ -1,9 +1,9 @@
 package ui;
 
-import rect.IDrawnShape;
-import rect.IShapeProvider;
+import shape.IShape;
+import shape.IShapeProvider;
 
-public interface ISelectable extends IShapeProvider<IDrawnShape>{
+public interface ISelectable extends IShapeProvider<IShape>{
 	boolean isSelected();
 	void onSelect();
 	void onDeselect();

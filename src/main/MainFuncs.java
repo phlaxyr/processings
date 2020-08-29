@@ -9,8 +9,8 @@ import clickers.IClickable;
 import processing.core.PApplet;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
-import rect.Rect;
-import rect.ShapeSet;
+import shape.Rect;
+import shape.ShapeSet;
 import trickery.ISetupable;
 
 public class MainFuncs extends PApplet{

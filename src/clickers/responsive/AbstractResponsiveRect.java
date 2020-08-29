@@ -1,7 +1,7 @@
 package clickers.responsive;
 
-import rect.FancyRect;
-import rect.New;
+import shape.FancyRect;
+import shape.New;
 
 public abstract class AbstractResponsiveRect extends FancyRect implements IRequireSelectionable{
 	public AbstractResponsiveRect(New b) {

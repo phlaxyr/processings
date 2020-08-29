@@ -6,8 +6,8 @@ import main.Ap;
 import main.Main;
 import mouse.IMouseManager;
 import processing.event.MouseEvent;
-import rect.IDrawnShape;
-import rect.ShapeSet;
+import shape.IShape;
+import shape.ShapeSet;
 import trickery.ISetupable;
 
 public class ToolboxManager implements ISetupable, IMouseManager{
@@ -59,7 +59,7 @@ public class ToolboxManager implements ISetupable, IMouseManager{
 	}
 	
 	IRefactorable moveme;
-	public void onToolboxMouse(MouseEvent e, IDrawnShape s, boolean isCoordsMovable) {
+	public void onToolboxMouse(MouseEvent e, IShape s, boolean isCoordsMovable) {
 
 		
 		if(e.getAction() == MouseEvent.RELEASE) {

@@ -1,11 +1,7 @@
-package rect;
+package shape;
 
-public interface IShapeProvider<V extends IDrawnShape> extends IDrawnShape{
+public interface IShapeProvider<V extends IShape> extends IShape{
 	V getShape();
-	@Override
-	default void draw() {
-		getShape().draw();
-	}
 	@Override
 	default boolean isPointWithin(float x, float y) {
 		return getShape().isPointWithin(x, y);

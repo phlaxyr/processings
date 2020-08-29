@@ -1,4 +1,4 @@
-package rect;
+package shape;
 
 public interface IFancinessCustomizable<This> {
 	This fill(int f);

@@ -2,7 +2,7 @@ package trickery;
 
 import clickers.IClickable;
 import processing.event.MouseEvent;
-import rect.FancyRect;
+import shape.FancyRect;
 
 public class FancyCoupledButton extends FancyRect implements IClickable<FancyCoupledButton>{
 

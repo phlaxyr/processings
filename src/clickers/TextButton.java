@@ -1,6 +1,6 @@
 package clickers;
 
-import rect.Textbox;
+import shape.Textbox;
 
 public class TextButton extends AbstractButton<Textbox>{
 

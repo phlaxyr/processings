@@ -1,6 +1,6 @@
 package clickers;
 
-import rect.Rect;
+import shape.Rect;
 
 /**
  * Simple button. A little unconventional hierarchy

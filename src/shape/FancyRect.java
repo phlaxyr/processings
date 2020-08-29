@@ -1,4 +1,4 @@
-package rect;
+package shape;
 
 public class FancyRect extends Rect implements IFancyRect{
 	public FancyRect(int x, int y, int sizex, int sizey) {

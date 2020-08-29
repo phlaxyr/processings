@@ -12,9 +12,9 @@ import mouse.DefaultMouseManager;
 import mouse.IMouseManager;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
-import rect.FancyRect;
-import rect.New;
-import rect.Textbox;
+import shape.FancyRect;
+import shape.New;
+import shape.Textbox;
 import ui.Toolbox;
 import ui.ToolboxManager;
 

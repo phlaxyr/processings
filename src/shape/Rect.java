@@ -1,11 +1,10 @@
-package rect;
+package shape;
 
 import main.Main;
 
-public class Rect implements IDrawnShape{
+public class Rect implements IDrawn, IShape{
 	public static Main main;
 	public int x, y, sizex, sizey;
-
 	public Rect(int x, int y, int sizex, int sizey) {
 		this.x = x;
 		this.y = y;
@@ -13,15 +12,16 @@ public class Rect implements IDrawnShape{
 		this.sizey = sizey;
 	}
 
-	
-	
-	
-	@Override
 	public void draw() {
-
 		main.rect(x, y, sizex, sizey);
-
 	}
+	
+	public IShape getShape() {
+		return this;
+	}
+	
+	
+
 	/**
 	 * inclusize exclusive
 	 * @param x
@@ -49,6 +49,4 @@ public class Rect implements IDrawnShape{
 	public void onSetup() {
 		
 	}
-
-	
 }

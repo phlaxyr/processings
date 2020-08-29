@@ -7,7 +7,7 @@ import java.util.List;
 import clickers.AbstractButton;
 import clickers.IClickable;
 import main.Main;
-import rect.Rect;
+import shape.Rect;
 import trickery.ISetupable;
 
 public class AnnotationProcessor {

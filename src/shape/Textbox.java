@@ -1,4 +1,4 @@
-package rect;
+package shape;
 
 /**
  * Convenience class ONLY.

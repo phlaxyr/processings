@@ -6,7 +6,7 @@ import java.util.List;
 import clickers.IClickable;
 import main.Ap;
 import processing.event.MouseEvent;
-import rect.FancyRect;
+import shape.FancyRect;
 
 
 /**

@@ -2,7 +2,7 @@ package trickery;
 
 import clickers.IClickable;
 import processing.event.MouseEvent;
-import rect.Rect;
+import shape.Rect;
 
 public class CoupledButton extends Rect implements IClickable<CoupledButton>{
 
