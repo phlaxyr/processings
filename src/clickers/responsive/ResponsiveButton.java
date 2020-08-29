@@ -19,17 +19,13 @@ public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButt
 	public boolean isSelected = false;
 
 	@Override
-	public void onClick(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isInside) {
 //		isSelected = true;
-		isSelected = !isSelected;
+		if(isInside) {
+			isSelected = !isSelected;
+		}
 	}
 
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
-//		isSelected = false;
-		
-	}
 
 
 	@Override

@@ -1,18 +1,19 @@
 package main;
 
 import annotation.AddFixed;
+
 import annotation.AnnotationProcessor;
 import annotation.Peek;
 import annotation.Setup;
 import clickers.FancyButton;
-import clickers.IClickable;
 import clickers.responsive.InteResponsiveButton;
 import clickers.responsive.ResponsiveButton;
+import mouse.DefaultMouseManager;
+import mouse.IMouseManager;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 import rect.FancyRect;
 import rect.New;
-import rect.Rect;
 import rect.Textbox;
 import ui.Toolbox;
 import ui.ToolboxManager;
@@ -22,6 +23,7 @@ public class Main extends MainFuncs{
 	public static Main main;
 //	public static PGraphics pgraphics;
 	{
+		Main.main = this;
 		MainFuncs.initBlock(this);
 	}
 
@@ -52,12 +54,9 @@ public class Main extends MainFuncs{
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
-		public void onClick(MouseEvent e) {
-			clickedin = true;
+		public void onMouseEvent(MouseEvent e, boolean isInside) {
+			clickedin = isInside;
 		}
-		public void onClickOutside(MouseEvent e) {
-			clickedin = false;
-		};
 	};
 	@Override
 	public void setup() {
@@ -65,8 +64,8 @@ public class Main extends MainFuncs{
 		this.surface.setResizable(true);
 		main.registerMethod("mouseEvent", this);
 		background(0x00FFFFFF); 
-		rectsmovable.add(buton1.rect);
-		clickersmovable.add(buton1);
+		shapes.rectsmovable.add(buton1.rect);
+		shapes.clickersmovable.add(buton1);
 		registerMovableButton(new FancyButton(100,200,16,16)).rect().fill(0xFF00FF00);
 		registerMovableButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)));
 		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
@@ -85,9 +84,7 @@ public class Main extends MainFuncs{
 		// start movable
 		
 
-		for (Rect rect : rectsmovable) {
-			rect.draw();
-		}
+		shapes.drawMovable();
 		Demo.gridLines(); // grid lines
 
 		// end movable
@@ -96,9 +93,7 @@ public class Main extends MainFuncs{
 		
 		// start fixed
 		
-		for (Rect rect : rects) {
-			rect.draw();
-		}
+		shapes.drawFixed();
 		Debug.debugPoints(); // debug points
 
 		main.pushStyle();
@@ -137,50 +132,14 @@ public class Main extends MainFuncs{
 
 	@Setup
 	public ToolboxManager selector = new ToolboxManager();
+	public IMouseManager mouseman = new DefaultMouseManager();
 	public void mouseEvent(MouseEvent e) {
 		
-
-		if(e.getAction() == MouseEvent.RELEASE ) {
-			for (IClickable<?> rect : clickers) {
-				float x = e.getX();
-				float y = e.getY();
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onClick(e);
-					selector.onMouse(e, rect, false);
-				} else {
-					rect.onClickOutside(e);
-				}
-			}
-			for (IClickable<?> rect : clickersmovable) {
-				float x = this.getMouseCoordX(e);
-				float y = this.getMouseCoordY(e);
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onClick(e);
-					selector.onMouse(e, rect, true);
-				} else {
-					rect.onClickOutside(e);
-				}
-			}
-		} else {
-			selector.onMouse(e, null, false);
-		}
-		transformer.mouseEvent(e);
+		mouseman.mouseEvent(e);
 
 		
 //		loop();
 	}
-	public IClickable<?> getOneElementUnder(float x, float y) {
-		for (IClickable<?> rect : clickers) {
-			if(rect.getShape().isPointWithin(x, y)) {
-				return rect;
-			}
-		}
-		for (IClickable<?> rect : clickersmovable) {
-			if(rect.getShape().isPointWithin(x, y)) {
-				return rect;
-			}
-		}
-		return null;
-	}
+
 
 }

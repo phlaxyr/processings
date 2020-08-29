@@ -11,12 +11,7 @@ public class CoupledButton extends Rect implements IClickable<CoupledButton>{
 	}
 
 	@Override
-	public void onClick(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isInside) {
 		
 	}
 

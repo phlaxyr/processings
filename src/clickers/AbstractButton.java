@@ -7,7 +7,6 @@ import rect.Rect;
 
 public class AbstractButton<T extends Rect> implements IClickable<T>{
 
-
 	public T rect;
 	
 	public AbstractButton(T rect) {
@@ -30,12 +29,7 @@ public class AbstractButton<T extends Rect> implements IClickable<T>{
 
 
 	@Override
-	public void onClick(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isInside) {
 		
 	}
 

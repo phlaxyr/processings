@@ -18,12 +18,7 @@ public class FancyCoupledButton extends FancyRect implements IClickable<FancyCou
 
 
 	@Override
-	public void onClick(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isInside) {
 		
 	}
 

@@ -22,16 +22,9 @@ public class InteResponsiveTextButton extends AbstractResponsiveTextbox implemen
 	public boolean isSelected = false;
 
 	@Override
-	public void onClick(MouseEvent e) {
-		isSelected = true;
+	public void onMouseEvent(MouseEvent e, boolean isInside) {
+		isSelected = isInside;
 //		System.out.print("oi");
-	}
-
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
-		isSelected = false;
-		
 	}
 
 	

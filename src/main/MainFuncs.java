@@ -10,12 +10,12 @@ import processing.core.PApplet;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
 import rect.Rect;
+import rect.ShapeSet;
 import trickery.ISetupable;
 
 public class MainFuncs extends PApplet{
 	
 	final static void initBlock(Main self) {
-		Main.main = self;
 		Rect.main = self;
 		Transform.main = self;
 		AnnotationProcessor.main = self;
@@ -26,19 +26,18 @@ public class MainFuncs extends PApplet{
 
 	final static void setupDependents(Main self) {
 		self.transformer.onSetup();
-		for(Rect r : self.rects) r.onSetup();
-		for(IClickable<?> c : self.clickers) c.onSetup();
-		for(Rect r : self.rectsmovable) r.onSetup();
-		for(IClickable<?> c : self.clickersmovable) c.onSetup();
+		for(Rect r : self.shapes.rects) r.onSetup();
+		for(IClickable<?> c : self.shapes.clickers) c.onSetup();
+		for(Rect r : self.shapes.rectsmovable) r.onSetup();
+		for(IClickable<?> c : self.shapes.clickersmovable) c.onSetup();
 		for(ISetupable r : self.soleRegistrees) r.onSetup();
 	}
 	
 	public Transform transformer = new Transform();
 	public List<ISetupable> soleRegistrees = new ArrayList<>();
-	public List<Rect> rectsmovable = new ArrayList<>();
-	public List<IClickable<?>> clickersmovable = new ArrayList<>();
-	public List<Rect> rects = new ArrayList<>();
-	public List<IClickable<?>> clickers = new ArrayList<>();
+	public ShapeSet shapes = new ShapeSet();
+	
+
 
 
 	public void updateTfmMatrix() {
@@ -123,32 +122,32 @@ public class MainFuncs extends PApplet{
 	}
 
 	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
-		rectsmovable.add(b.rect);
-		clickersmovable.add(b);
+		shapes.rectsmovable.add(b.rect);
+		shapes.clickersmovable.add(b);
 		return b;
 	}
 	public <N extends AbstractButton<?>> N registerButton(N b) {
-		rects.add(b.rect);
-		clickers.add(b);
+		shapes.rects.add(b.rect);
+		shapes.clickers.add(b);
 		return b;
 	}
 	public <N extends IClickable<?>> N registerMovableClickable(N b) {
-		clickersmovable.add(b);
+		shapes.clickersmovable.add(b);
 		return b;
 	}
 	public <N extends IClickable<?>> N registerClickable(N b) {
-		clickers.add(b);
+		shapes.clickers.add(b);
 		return b;
 	}
 	
 	public <N extends Rect> N registerMovableRect(N b) {
-		rectsmovable.add(b);
+		shapes.rectsmovable.add(b);
 		return b;
 	}
 
 	
 	public <N extends Rect> N registerRect(N b) {
-		rects.add(b);
+		shapes.rects.add(b);
 		return b;
 	}
 	
