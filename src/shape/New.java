@@ -20,7 +20,7 @@ public class New implements IFancinessCustomizable<New>{
 	public Rect Rect() {
 		return new Rect(x, y, sizex, sizey);
 	}
-	public AbstractButton<?> Button() {
+	public AbstractButton Button() {
 		return new SimpleButton(this.Rect());
 	}
 	
@@ -208,7 +208,7 @@ public class New implements IFancinessCustomizable<New>{
 			return super.Textbox();
 		}
 		@Override
-		public AbstractButton<?> Button() {
+		public AbstractButton Button() {
 			return super.TextButton();
 		}
 	}

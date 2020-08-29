@@ -13,7 +13,7 @@ import shape.FancyRect;
  * @author phlaxyr
  *
  */
-public class Toolbox extends FancyRect implements IClickable<Toolbox>{
+public class Toolbox extends FancyRect implements IClickable{
 	public Toolbox(int x, int y, int sizex, int sizey) {
  		super(x, y, sizex, sizey);
 	}

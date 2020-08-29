@@ -5,7 +5,7 @@ import clickers.responsive.ISelectionable;
 import shape.IDrawn;
 
 public interface IIntegratedSelectionable
-		extends IClickable<IIntegratedSelectionable>, IDrawn, ISelectionable, IRequireSelectionable {
+		extends IClickable, IDrawn, ISelectionable, IRequireSelectionable {
 //	@SuppressWarnings("unchecked")
 //	@Override
 //	default I getShape() {

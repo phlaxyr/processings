@@ -5,7 +5,7 @@ import shape.IShape;
 import shape.IShapeProvider;
 import trickery.ISetupable;
 
-public interface IClickable<V extends IShape> extends IShapeProvider<V>, ISetupable {
+public interface IClickable extends IShapeProvider<IShape>, ISetupable {
 
 //	public void setElement(V v);
 	void onMouseEvent(MouseEvent e, boolean isInside);

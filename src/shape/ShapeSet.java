@@ -7,9 +7,9 @@ import clickers.IClickable;
 
 public class ShapeSet {
 	public List<Rect> rectsmovable = new ArrayList<>();
-	public List<IClickable<?>> clickersmovable = new ArrayList<>();
+	public List<IClickable> clickersmovable = new ArrayList<>();
 	public List<Rect> rects = new ArrayList<>();
-	public List<IClickable<?>> clickers = new ArrayList<>();
+	public List<IClickable> clickers = new ArrayList<>();
 	
 	public void drawMovable() {
 		for (Rect rect : rectsmovable) {
@@ -21,13 +21,13 @@ public class ShapeSet {
 			rect.draw();
 		}
 	}
-	public IClickable<?> getOneElementUnder(float x, float y) {
-		for (IClickable<?> rect : clickers) {
+	public IClickable getOneElementUnder(float x, float y) {
+		for (IClickable rect : clickers) {
 			if(rect.getShape().isPointWithin(x, y)) {
 				return rect;
 			}
 		}
-		for (IClickable<?> rect : clickersmovable) {
+		for (IClickable rect : clickersmovable) {
 			if(rect.getShape().isPointWithin(x, y)) {
 				return rect;
 			}

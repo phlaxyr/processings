@@ -7,7 +7,7 @@ import shape.Rect;
  * @author phlaxyr
  *
  */
-public class SimpleButton extends AbstractButton<Rect>{
+public class SimpleButton extends AbstractButton {
 
 	public SimpleButton(Rect rect) {
 		super(rect);

@@ -1,18 +1,21 @@
 package clickers.responsive;
 
 import clickers.AbstractButton;
-
 import processing.event.MouseEvent;
-public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton<ResponsiveRect> implements ISelectionable {
+public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton implements ISelectionable {
 
 
 
 	public ResponsiveButton(ResponsiveRect rect) {
 		super(rect);
 	}
-
+	@Override
+		public ResponsiveRect getShape() {
+			return (ResponsiveRect) super.getShape();
+		}
+	
 	{
-		rect.acknowledgeContainer(this);
+		getShape().acknowledgeContainer(this);
 	}
 
 	

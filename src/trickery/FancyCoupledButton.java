@@ -4,7 +4,7 @@ import clickers.IClickable;
 import processing.event.MouseEvent;
 import shape.FancyRect;
 
-public class FancyCoupledButton extends FancyRect implements IClickable<FancyCoupledButton>{
+public class FancyCoupledButton extends FancyRect implements IClickable{
 
 
 	public FancyCoupledButton(int x, int y, int sizex, int sizey) {

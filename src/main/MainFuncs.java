@@ -27,9 +27,9 @@ public class MainFuncs extends PApplet{
 	final static void setupDependents(Main self) {
 		self.transformer.onSetup();
 		for(Rect r : self.shapes.rects) r.onSetup();
-		for(IClickable<?> c : self.shapes.clickers) c.onSetup();
+		for(IClickable c : self.shapes.clickers) c.onSetup();
 		for(Rect r : self.shapes.rectsmovable) r.onSetup();
-		for(IClickable<?> c : self.shapes.clickersmovable) c.onSetup();
+		for(IClickable c : self.shapes.clickersmovable) c.onSetup();
 		for(ISetupable r : self.soleRegistrees) r.onSetup();
 	}
 	
@@ -121,21 +121,21 @@ public class MainFuncs extends PApplet{
 		this.rect(posx, posy, sizex, sizey);
 	}
 
-	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
+	public <N extends AbstractButton> N registerMovableButton(N b) {
 		shapes.rectsmovable.add(b.rect);
 		shapes.clickersmovable.add(b);
 		return b;
 	}
-	public <N extends AbstractButton<?>> N registerButton(N b) {
+	public <N extends AbstractButton> N registerButton(N b) {
 		shapes.rects.add(b.rect);
 		shapes.clickers.add(b);
 		return b;
 	}
-	public <N extends IClickable<?>> N registerMovableClickable(N b) {
+	public <N extends IClickable> N registerMovableClickable(N b) {
 		shapes.clickersmovable.add(b);
 		return b;
 	}
-	public <N extends IClickable<?>> N registerClickable(N b) {
+	public <N extends IClickable> N registerClickable(N b) {
 		shapes.clickers.add(b);
 		return b;
 	}

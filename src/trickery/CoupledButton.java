@@ -4,7 +4,7 @@ import clickers.IClickable;
 import processing.event.MouseEvent;
 import shape.Rect;
 
-public class CoupledButton extends Rect implements IClickable<CoupledButton>{
+public class CoupledButton extends Rect implements IClickable{
 
 	public CoupledButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);

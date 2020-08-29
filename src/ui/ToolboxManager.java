@@ -34,7 +34,7 @@ public class ToolboxManager implements ISetupable, IMouseManager{
 	@Override
 	public void mouseEvent(MouseEvent e) {
 		if(e.getAction() == MouseEvent.RELEASE ) {
-			for (IClickable<?> rect : s.clickers) {
+			for (IClickable rect : s.clickers) {
 				float x = e.getX();
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
@@ -44,7 +44,7 @@ public class ToolboxManager implements ISetupable, IMouseManager{
 					rect.onMouseEvent(e, false);
 				}
 			}
-			for (IClickable<?> rect : s.clickersmovable) {
+			for (IClickable rect : s.clickersmovable) {
 				float x = m.getMouseCoordX(e);
 				float y = m.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {
