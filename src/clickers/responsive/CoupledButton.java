@@ -3,11 +3,11 @@ package clickers.responsive;
 import clickers.IIntegratedSelectionable;
 import processing.event.MouseEvent;
 
-public class InteResponsiveButton extends AbstractResponsiveRect implements IIntegratedSelectionable {
-	public InteResponsiveButton(int x, int y, int sizex, int sizey) {
+public class CoupledButton extends AbstractResponsiveRect implements IIntegratedSelectionable {
+	public CoupledButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
-	public InteResponsiveButton(int x, int y, int sizex, int sizey, String text) {
+	public CoupledButton(int x, int y, int sizex, int sizey, String text) {
 		super(x, y, sizex, sizey, text);
 	}
 
@@ -16,7 +16,7 @@ public class InteResponsiveButton extends AbstractResponsiveRect implements IInt
 
 
 	@Override
-	public InteResponsiveButton getShape() {
+	public CoupledButton getShape() {
 		return this;
 	}
 	

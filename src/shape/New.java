@@ -3,7 +3,7 @@ package shape;
 import clickers.AbstractButton;
 import clickers.FancyButton;
 import clickers.SimpleButton;
-import clickers.responsive.InteResponsiveButton;
+import clickers.responsive.CoupledButton;
 import clickers.responsive.ResponsiveButton;
 import clickers.responsive.ResponsiveRect;
 
@@ -47,8 +47,8 @@ public class New implements IFancinessCustomizable<New>{
 		New.match(r, this);
 		return r;
 	}
-	public InteResponsiveButton InteResponsiveButton() {
-		InteResponsiveButton r = new InteResponsiveButton(x, y, sizex, sizey);
+	public CoupledButton InteResponsiveButton() {
+		CoupledButton r = new CoupledButton(x, y, sizex, sizey);
 		New.match(r, this);
 		return r;
 	}
@@ -64,8 +64,8 @@ public class New implements IFancinessCustomizable<New>{
 		return r;
 	}
 	
-	public InteResponsiveButton InteResponsiveTextButton() {
-		InteResponsiveButton r = new InteResponsiveButton(x, y, sizex, sizey, str);
+	public CoupledButton InteResponsiveTextButton() {
+		CoupledButton r = new CoupledButton(x, y, sizex, sizey, str);
 		match(r, this);
 		return r;
 	}

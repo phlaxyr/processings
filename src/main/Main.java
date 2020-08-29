@@ -6,7 +6,7 @@ import annotation.AnnotationProcessor;
 import annotation.Peek;
 import annotation.Setup;
 import clickers.FancyButton;
-import clickers.responsive.InteResponsiveButton;
+import clickers.responsive.CoupledButton;
 import clickers.responsive.ResponsiveButton;
 import mouse.DefaultMouseManager;
 import mouse.IMouseManager;
@@ -44,11 +44,11 @@ public class Main extends MainFuncs{
 	@AddFixed
 	public ResponsiveButton rb = New.at(35,300,50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
 	@AddFixed
-	public InteResponsiveButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
+	public CoupledButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
 	@AddFixed
 	public ResponsiveButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public InteResponsiveButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
+	public CoupledButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
