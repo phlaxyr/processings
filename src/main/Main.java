@@ -13,7 +13,6 @@ import processing.event.MouseEvent;
 import shape.FancyRect;
 import shape.New;
 import shape.Textbox;
-import trickery.element.ClickHandler;
 import trickery.element.Element;
 import ui.Toolbox;
 import ui.ToolboxManager;
@@ -58,13 +57,12 @@ public class Main extends MainFuncs{
 
 		self.fill = 0xFF000000;
 		self.stroke = 0xFFFF6600;
-		ClickHandler superonclick = self.onclick;
+		self.z_index = 10;
 		self.onclick = (self2, e, isClick, in) -> {
-			superonclick.onclick(self, e, isClick, in);
+			self.super_.onclick(e, isClick, in);
 			if(in && isClick) {
 				self.fill += 0x00001100;
 			}
-			System.out.print("HERE!");
 			};
 		// self.unregister(); // this MUST be the last call
 	});
@@ -151,9 +149,10 @@ public class Main extends MainFuncs{
 
 	@Setup
 	public ToolboxManager selector = new ToolboxManager();
+	@SuppressWarnings("unused")
 	public void mouseEvent(MouseEvent e) {
 
-		if(ToolboxManager.isState(toolb, ToolboxState.MOVE)) {
+		if(false && ToolboxManager.isState(toolb, ToolboxState.MOVE)) {
 			// MOVE
 			float x = e.getX();
 			float y = e.getY();

@@ -10,7 +10,6 @@ public interface ClickHandler {
 		public void onclick(Element self, MouseEvent e, boolean isClick, boolean isInside) {
 			
 		}
-		@SuppressWarnings("unused")
-		public final boolean IS_NONE = true;
+		
 	};
 }

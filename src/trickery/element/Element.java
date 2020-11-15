@@ -25,7 +25,6 @@ public class Element {
 		}
 		 // auto-register
 	}
-
 	public Element(int x, int y, PostConstructor constr) {
 		this.x = x;
 		this.y = y;
@@ -117,6 +116,8 @@ public class Element {
 	public Integer stroke = null;
 	
 	
+	public float z_index = 0;
+	
 	
 	public String text = null;
 	public Float textsize = null;
@@ -159,49 +160,37 @@ public class Element {
 		onsetup.onsetup(this);
 	}
 	
+	// public Super Super = new Super();
+
 	// Imitate Python/JS's Properties
-	public ClickHandler onclick = ClickHandler.NONE;
-	public void onclick(MouseEvent e, boolean isClick, boolean isInside) {
+	// Imitate the super keyword
+
+	
+	/**
+	 * Contains copies of original lambda functions, ie. draw, onclick, etc. that work and are callable
+	 */
+	public final SuperWrapper super_ = new SuperWrapper(this);
+	
+	public ClickHandler onclick = super_.onclick;
+	/**
+	 * To override, modify the clickhandler object
+	 * ie. self.onclick = (self, e, is, in) -> {System.out.println("mouse")};
+	 */
+	public final void onclick(MouseEvent e, boolean isClick, boolean isInside) {
 		onclick.onclick(this, e, isClick, isInside);
 	}
 	
-	public DrawHandler draw = (self) -> {
 
-		// System.out.print("draw");
-		Main.main.pushStyle();
-		Main main = Main.main;
-		if(fill != null) {
-			main.fill(fill);
-		}
-		if(stroke != null) {
-			main.stroke(stroke);
-		}
-		main.rect(x, y, lenx, leny);
-		if(text != null) {
-			main.text(text, x+5, y+5);
-		}
-		/*
-		if(hasText) {
-			if(textsize == 0.0) {
-				throw new NullPointerException("textsize 0.0. onSetup() was not called");
-			} else {
-				main.textSize(tex0
-				tsize);
-			}
-			main.fill(textcolor);
-			main.text(text, x+5, y+5/*);//*//*, sizex, sizey);
-		}*/
-
-		
-		main.popStyle();
-		
-	};
-			//DrawHandler.NONE;
-	public void draw() {
+	public DrawHandler draw = super_.draw;
+	/**
+	 * To override, modify the drawhandler object
+	 * ie. self.draw = (self) -> {System.out.println("draw")};
+	 */
+	public final void draw() {
 		draw.draw(this);
 	}
 	
-	public void assertt(boolean value) { 
+	public static void assertt(boolean value) { 
 		if(!value) {
 			throw new AssertionError(value);
 		}

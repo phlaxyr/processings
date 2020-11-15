@@ -38,6 +38,7 @@ public class MainFuncs extends PApplet{
 		for(IClickable c : self.shapes.clickersmovable) c.onSetup();
 		for(ISetupable r : self.soleRegistrees) r.onSetup();
 		for(Element e : self.shapes.elements) e.onsetup();
+		self.shapes.setup();
 	}
 	
 	public Transform transformer = new Transform();
@@ -217,7 +218,7 @@ public class MainFuncs extends PApplet{
 			registerClickable(click, el.registerfixed);
 
 		}
-		registerDrawer(() -> el.draw(), el.registerfixed);
+		// registerDrawer(() -> el.draw(), el.registerfixed);
 	}
 	
 }
