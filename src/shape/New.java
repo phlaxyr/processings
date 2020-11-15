@@ -47,7 +47,7 @@ public class New implements IFancinessCustomizable<New>{
 		New.match(r, this);
 		return r;
 	}
-	public CoupledButton InteResponsiveButton() {
+	public CoupledButton CoupledButton() {
 		CoupledButton r = new CoupledButton(x, y, sizex, sizey);
 		New.match(r, this);
 		return r;
@@ -64,7 +64,7 @@ public class New implements IFancinessCustomizable<New>{
 		return r;
 	}
 	
-	public CoupledButton InteResponsiveTextButton() {
+	public CoupledButton CoupledTextButton() {
 		CoupledButton r = new CoupledButton(x, y, sizex, sizey, str);
 		match(r, this);
 		return r;

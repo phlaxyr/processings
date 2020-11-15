@@ -44,6 +44,8 @@ public class RectShape implements IShape{
 	public void onSetup() {
 		
 	}
-
+	public static void draw(Main main, RectShape s) {
+		main.rect(s.x, s.y, s.sizex, s.sizey);
+	}
 	
 }

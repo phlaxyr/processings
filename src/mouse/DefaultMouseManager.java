@@ -21,18 +21,18 @@ public class DefaultMouseManager implements IMouseManager{
 				float x = e.getX();
 				float y = e.getY();
 				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouseEvent(e, true);
+					rect.onMouseEvent(e, true, true);
 				} else {
-					rect.onMouseEvent(e, false);
+					rect.onMouseEvent(e, true, false);
 				}
 			}
 			for (IClickable rect : shapes().clickersmovable) {
 				float x = m.getMouseCoordX(e);
 				float y = m.getMouseCoordY(e);
 				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouseEvent(e, true);
+					rect.onMouseEvent(e, true, true);
 				} else {
-					rect.onMouseEvent(e, false);
+					rect.onMouseEvent(e, true, false);
 				}
 			}
 		}

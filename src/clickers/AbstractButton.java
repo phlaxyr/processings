@@ -29,7 +29,7 @@ public class AbstractButton implements IClickable {
 
 
 	@Override
-	public void onMouseEvent(MouseEvent e, boolean isInside) {
+	public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
 		
 	}
 
@@ -37,6 +37,12 @@ public class AbstractButton implements IClickable {
 	@Override
 	public void onSetup() {
 		
+	}
+
+
+	@Override
+	public void draw() {
+		this.getShape().draw();
 	}
 	
 

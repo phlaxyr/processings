@@ -9,9 +9,15 @@ import clickers.IClickable;
 import processing.core.PApplet;
 import processing.core.PMatrix;
 import processing.event.MouseEvent;
+import shape.IDrawn;
+import shape.IShape;
 import shape.Rect;
 import shape.ShapeSet;
+import trickery.IDrawHandler;
 import trickery.ISetupable;
+import trickery.ITangible;
+import trickery.element.ClickHandler;
+import trickery.element.Element;
 
 public class MainFuncs extends PApplet{
 	
@@ -26,11 +32,12 @@ public class MainFuncs extends PApplet{
 
 	final static void setupDependents(Main self) {
 		self.transformer.onSetup();
-		for(Rect r : self.shapes.rects) r.onSetup();
+		for(IDrawn r : self.shapes.rects) r.onSetup();
 		for(IClickable c : self.shapes.clickers) c.onSetup();
-		for(Rect r : self.shapes.rectsmovable) r.onSetup();
+		for(IDrawn r : self.shapes.rectsmovable) r.onSetup();
 		for(IClickable c : self.shapes.clickersmovable) c.onSetup();
 		for(ISetupable r : self.soleRegistrees) r.onSetup();
+		for(Element e : self.shapes.elements) e.onsetup();
 	}
 	
 	public Transform transformer = new Transform();
@@ -121,38 +128,96 @@ public class MainFuncs extends PApplet{
 		this.rect(posx, posy, sizex, sizey);
 	}
 
-	public <N extends AbstractButton> N registerMovableButton(N b) {
-		shapes.rectsmovable.add(b.rect);
-		shapes.clickersmovable.add(b);
+	public <N extends AbstractButton> N registerButton(N b, boolean isFixed) {
+		if(isFixed) {
+			shapes.rects.add(b.rect);
+			shapes.clickers.add(b);
+		} else {
+			shapes.rectsmovable.add(b.rect);
+			shapes.clickersmovable.add(b);
+		}
 		return b;
 	}
-	public <N extends AbstractButton> N registerButton(N b) {
-		shapes.rects.add(b.rect);
-		shapes.clickers.add(b);
-		return b;
-	}
-	public <N extends IClickable> N registerMovableClickable(N b) {
-		shapes.clickersmovable.add(b);
-		return b;
-	}
-	public <N extends IClickable> N registerClickable(N b) {
-		shapes.clickers.add(b);
+	public <N extends IClickable> N registerClickable(N b, boolean isFixed) {
+		if(isFixed) {
+			shapes.clickers.add(b);
+		} else {
+			shapes.clickersmovable.add(b);
+		}
 		return b;
 	}
 	
-	public <N extends Rect> N registerMovableRect(N b) {
-		shapes.rectsmovable.add(b);
+	public <N extends Rect> N registerRect(N b, boolean isFixed) {
+		if(isFixed) {
+			shapes.rects.add(b);
+		} else {
+			shapes.rectsmovable.add(b);
+		}
 		return b;
 	}
 
-	
-	public <N extends Rect> N registerRect(N b) {
-		shapes.rects.add(b);
-		return b;
-	}
 	
 	public <R extends ISetupable> R registerSetupable(R r) {
 		soleRegistrees.add(r);
 		return r;
 	}
+	
+	public <R extends IDrawHandler> R registerDrawer(R r, boolean isFixed) {
+		if(isFixed) shapes.soledrawables.add(r);
+		else shapes.soledrawablesmovable.add(r);
+		return r;
+	} 
+	
+	public <T extends ITangible> T registerTangible(T t, boolean isFixed) {
+		registerDrawer(t.getDrawer(), isFixed);
+		
+		return t;
+	}
+	
+
+	public void register(Element el) {
+		shapes.elements.add(el);
+		if(el.onclick != ClickHandler.NONE) {
+			shapes.elementsonclick.add(el);
+			IShape shape = new IShape() {
+				@Override
+				public void onSetup() {
+					// Elements get their own setup
+				}
+				@Override
+				public boolean isPointWithin(int x, int y) {
+					return el.isPointWithin(x, y);
+				}
+
+				@Override
+				public boolean isPointWithin(float x, float y) {
+					return el.isPointWithin(x, y);
+				}
+			};
+			IClickable click = new IClickable() {
+				@Override
+				public IShape getShape() {
+					return shape;
+				}
+				@Override
+				public void onSetup() {
+					// el.onsetup(); Elements get their own setup
+				}
+				@Override
+				public void draw() {
+					el.draw();
+				}
+				@Override
+				public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
+					
+					el.onclick(e, isClick, isInside);
+				}
+				
+			};
+			registerClickable(click, el.registerfixed);
+
+		}
+		registerDrawer(() -> el.draw(), el.registerfixed);
+	}
+	
 }

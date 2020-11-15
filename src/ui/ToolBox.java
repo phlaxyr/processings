@@ -92,7 +92,7 @@ public class Toolbox extends FancyRect implements IClickable{
 	 * @param x
 	 * @param y
 	 */
-	public void onMouseEvent(MouseEvent e, boolean isInside) {
+	public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
 
 //		Util.println(x, y);
 //		System.out.println(nodeCreate.isWithinBounds(x, y, flatdc));
@@ -108,15 +108,15 @@ public class Toolbox extends FancyRect implements IClickable{
 //			
 //			nodeCreate.setUnpressed();
 //		}
-		System.out.print("CLICK!");
+		// System.out.print("CLICK!");
 		for(ToolboxButton b : tools) {
 			boolean wasPressed = b.isSelected();
 			if(b.isPointWithin(e.getX(), e.getY())) {
-				b.onMouseEvent(e, true);
+				b.onMouseEvent(e, isClick, true);
 				
 				activeTool = wasPressed ? ToolboxButton.NONE : b;
 //				main.selector.onMouse(e, activeTool, false);
-			} else b.onMouseEvent(e, false);
+			} else b.onMouseEvent(e, isClick, false);
 //			if(b.buttonClicked(x, y)) { 
 				
 

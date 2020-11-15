@@ -1,5 +1,7 @@
 package clickers.responsive;
 
+import clickers.responsive.trickery.IRequireSelectionable;
+
 public class ResponsiveRect/* <R extends ISelectableModel> */ extends AbstractResponsiveRect implements IRequireSelectionable { // implements
 																													// IRequireModel<R>{
 //	R r;

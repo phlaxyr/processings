@@ -28,6 +28,7 @@ public class AnnotationProcessor {
 
 		
 		public List<Field> peeks = new ArrayList<>();
+		public List<Field> ats = new ArrayList<>();
 		public float[] xs, ys;
 		public int[] textsize;
 		Object o;
@@ -38,6 +39,7 @@ public class AnnotationProcessor {
 			Field[] fs = c.getDeclaredFields();
 			try {
 				for(Field f : fs) {
+					
 					if(f.isAnnotationPresent(Peek.class)) {
 						this.peeks.add(f);
 					}
@@ -54,6 +56,9 @@ public class AnnotationProcessor {
 						} else {
 							loadFlexible(f, o);
 						}
+					}
+					if(f.isAnnotationPresent(At.class)) {
+						this.ats.add(f);
 					}
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -72,27 +77,32 @@ public class AnnotationProcessor {
 				
 			}
 		}
-		@SuppressWarnings("rawtypes")
 		private void loadFlexible(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
-			if(AbstractButton.class.isAssignableFrom(f.getType())) main.registerMovableButton((AbstractButton)f.get(o));
-			else {
-				if(Rect.class.isAssignableFrom(f.getType())) main.registerMovableRect((Rect)f.get(o));
-				if(IClickable.class.isAssignableFrom(f.getType())) main.registerMovableClickable((IClickable)f.get(o));
-			}
+//			if(ITangible.class.isAssignableFrom(f.getType())) {
+//				ITangible tang = (ITangible)f.get(o);
+//				
+//				return;
+//			}
+
+			load(f, o, false);
 		}
-		@SuppressWarnings("rawtypes")
 		private void loadFixed(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {
+			load(f, o, true);
+	
+		}
+		private void load(Field f, Object o, boolean isFixed) throws IllegalArgumentException, IllegalAccessException {
+
 			if(AbstractButton.class.isAssignableFrom(f.getType())) {
-				main.registerButton((AbstractButton)f.get(o));
+				main.registerButton((AbstractButton)f.get(o), isFixed);
 			} else {
 				if(Rect.class.isAssignableFrom(f.getType())) {
-					main.registerRect((Rect)f.get(o));
+					main.registerRect((Rect)f.get(o), isFixed);
 				}
 				if(IClickable.class.isAssignableFrom(f.getType())) {
-					main.registerClickable((IClickable)f.get(o));
+					main.registerClickable((IClickable)f.get(o), isFixed);
 				}
 			}
-	
+
 		}
 
 		private void loadSetupable(Field f, Object o) throws IllegalArgumentException, IllegalAccessException {

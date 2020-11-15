@@ -1,7 +1,10 @@
 package shape;
 
-public interface IDrawn {
+import trickery.IDrawHandler;
+import trickery.ISetupable;
+
+public interface IDrawn extends IDrawHandler, ISetupable{
 	IShape getShape();
-	void draw();
+	// void draw();
 
 }

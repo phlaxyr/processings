@@ -2,7 +2,7 @@ package shape;
 
 import main.Main;
 
-public class Rect implements IDrawn, IShape{
+public class Rect implements IDrawnShape{
 	public static Main main;
 	public int x, y, sizex, sizey;
 	public Rect(int x, int y, int sizex, int sizey) {

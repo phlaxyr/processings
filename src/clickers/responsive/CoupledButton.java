@@ -1,9 +1,9 @@
 package clickers.responsive;
 
-import clickers.IIntegratedSelectionable;
+import clickers.responsive.trickery.ICoupledSelectionable;
 import processing.event.MouseEvent;
 
-public class CoupledButton extends AbstractResponsiveRect implements IIntegratedSelectionable {
+public class CoupledButton extends AbstractResponsiveRect implements ICoupledSelectionable {
 	public CoupledButton(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
@@ -23,9 +23,10 @@ public class CoupledButton extends AbstractResponsiveRect implements IIntegrated
 	public boolean isSelected = false;
 
 	@Override
-	public void onMouseEvent(MouseEvent e, boolean isInside) {
-		isSelected = isInside;
-		System.out.print("oi");
+	public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
+		if(isClick) {
+			isSelected = isInside;
+		}
 	}
 
 	

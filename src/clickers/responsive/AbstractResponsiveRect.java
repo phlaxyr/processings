@@ -1,5 +1,6 @@
 package clickers.responsive;
 
+import clickers.responsive.trickery.IRequireSelectionable;
 import shape.FancyRect;
 import shape.New;
 

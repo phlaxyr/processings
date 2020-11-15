@@ -1,17 +1,18 @@
-package clickers;
+package clickers.responsive.trickery;
 
-import clickers.responsive.IRequireSelectionable;
+import clickers.IClickable;
 import clickers.responsive.ISelectionable;
 import shape.IDrawn;
 
-public interface IIntegratedSelectionable
+public interface ICoupledSelectionable
 		extends IClickable, IDrawn, ISelectionable, IRequireSelectionable {
 //	@SuppressWarnings("unchecked")
 //	@Override
 //	default I getShape() {
 //		return (I) this;
 //	}
-	default IIntegratedSelectionable getShape() {
+	@Override
+	default ICoupledSelectionable getShape() {
 		return this;
 	}
 
@@ -19,7 +20,8 @@ public interface IIntegratedSelectionable
 	default ISelectionable getSelectable() {
 		return this;
 	}
-
+	@Override
 	default void acknowledgeContainer(ISelectionable s) {
 	}
+
 }

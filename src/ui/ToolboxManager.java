@@ -1,16 +1,15 @@
 package ui;
 
 import capabilities.IRefactorable;
-import clickers.IClickable;
 import main.Ap;
 import main.Main;
-import mouse.IMouseManager;
+import mouse.MovableMouseEvent;
 import processing.event.MouseEvent;
 import shape.IShape;
 import shape.ShapeSet;
 import trickery.ISetupable;
 
-public class ToolboxManager implements ISetupable, IMouseManager{
+public class ToolboxManager implements ISetupable {
 	
 	Main m;
 	Toolbox tb;
@@ -31,36 +30,22 @@ public class ToolboxManager implements ISetupable, IMouseManager{
 		return getToolboxState(tb) == s;
 	}
 	
-	@Override
-	public void mouseEvent(MouseEvent e) {
-		if(e.getAction() == MouseEvent.RELEASE ) {
-			for (IClickable rect : s.clickers) {
-				float x = e.getX();
-				float y = e.getY();
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouseEvent(e, true);
-					onToolboxMouse(e, rect, false);
-				} else {
-					rect.onMouseEvent(e, false);
-				}
-			}
-			for (IClickable rect : s.clickersmovable) {
-				float x = m.getMouseCoordX(e);
-				float y = m.getMouseCoordY(e);
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onMouseEvent(e, true);
-					onToolboxMouse(e, rect, true);
-				} else {
-					rect.onMouseEvent(e, false);
-				}
-			}
-		}
-		m.transformer.mouseEvent(e);
-	}
-	
 	IRefactorable moveme;
-	public void onToolboxMouse(MouseEvent e, IShape s, boolean isCoordsMovable) {
+	public void onToolboxMouse(MouseEvent e) {
 
+
+		IShape nominal = s.getOneFixedUnder(e);
+		boolean isMovable;
+		if(nominal == null) {
+			nominal = s.getOneMovableUnder(new MovableMouseEvent(e, Ap.p));
+			if(nominal == null) {
+				return;
+			} else {
+				isMovable = true;
+			}
+		} else {
+			isMovable = false;
+		}
 		
 		if(e.getAction() == MouseEvent.RELEASE) {
 			if(s != null) {
@@ -71,8 +56,8 @@ public class ToolboxManager implements ISetupable, IMouseManager{
 		} else if(e.getAction() == MouseEvent.DRAG) {
 			float x = e.getX();
 			float y = e.getY();
-			x = isCoordsMovable ? Ap.p.screenXToCoordX(x) : x;
-			y = isCoordsMovable ? Ap.p.screenYToCoordY(y) : y;
+			x = isMovable ? Ap.p.screenXToCoordX(x) : x;
+			y = isMovable ? Ap.p.screenYToCoordY(y) : y;
 			if(isState(tb, ToolboxState.MOVE)) {
 				moveme.moveTo((int)x, (int)y);
 			}

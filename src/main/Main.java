@@ -1,22 +1,23 @@
 package main;
 
 import annotation.AddFixed;
-
 import annotation.AnnotationProcessor;
 import annotation.Peek;
 import annotation.Setup;
 import clickers.FancyButton;
+import clickers.IClickable;
 import clickers.responsive.CoupledButton;
 import clickers.responsive.ResponsiveButton;
-import mouse.DefaultMouseManager;
-import mouse.IMouseManager;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 import shape.FancyRect;
 import shape.New;
 import shape.Textbox;
+import trickery.element.ClickHandler;
+import trickery.element.Element;
 import ui.Toolbox;
 import ui.ToolboxManager;
+import ui.ToolboxState;
 
 public class Main extends MainFuncs{
 
@@ -44,18 +45,36 @@ public class Main extends MainFuncs{
 	@AddFixed
 	public ResponsiveButton rb = New.at(35,300,50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
 	@AddFixed
-	public CoupledButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
+	public CoupledButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).CoupledButton();
 	@AddFixed
 	public ResponsiveButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public CoupledButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
+	public CoupledButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).CoupledTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
+	
+	public Element e = new Element(10, 10, 100, 100, (self) -> {
+
+		self.fill = 0xFF000000;
+		self.stroke = 0xFFFF6600;
+		ClickHandler superonclick = self.onclick;
+		self.onclick = (self2, e, isClick, in) -> {
+			superonclick.onclick(self, e, isClick, in);
+			if(in && isClick) {
+				self.fill += 0x00001100;
+			}
+			System.out.print("HERE!");
+			};
+		// self.unregister(); // this MUST be the last call
+	});
+	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
-		public void onMouseEvent(MouseEvent e, boolean isInside) {
-			clickedin = isInside;
+		public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
+			if(isClick) {
+				clickedin = isInside;
+			}
 		}
 	};
 	@Override
@@ -66,9 +85,9 @@ public class Main extends MainFuncs{
 		background(0x00FFFFFF); 
 		shapes.rectsmovable.add(buton1.rect);
 		shapes.clickersmovable.add(buton1);
-		registerMovableButton(new FancyButton(100,200,16,16)).rect().fill(0xFF00FF00);
-		registerMovableButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)));
-		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
+		registerButton(new FancyButton(100,200,16,16), false).rect().fill(0xFF00FF00);
+		registerButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)), false);
+		registerButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)), false);
 //		matrix = main.getMatrix();
 
 //		tb.autoTextSize();
@@ -132,13 +151,42 @@ public class Main extends MainFuncs{
 
 	@Setup
 	public ToolboxManager selector = new ToolboxManager();
-	public IMouseManager mouseman = new DefaultMouseManager();
 	public void mouseEvent(MouseEvent e) {
-		
-		mouseman.mouseEvent(e);
 
+		if(ToolboxManager.isState(toolb, ToolboxState.MOVE)) {
+			// MOVE
+			float x = e.getX();
+			float y = e.getY();
+			if(!toolb.isPointWithin(x, y)) { // if we're clicking on a sandbox, nontoolbox thing
+				selector.onToolboxMouse(e);
+			}
+			
+		} else {
 		
-//		loop();
+			// NORMAL
+			if(e.getAction() == MouseEvent.RELEASE ) {
+				for (IClickable rect : shapes.clickers) {
+					float x = e.getX();
+					float y = e.getY();
+					rect.onMouseEvent(e, true, rect.getShape().isPointWithin(x, y));
+	
+				}
+				for (IClickable rect : shapes.clickersmovable) {
+					float x = getMouseCoordX(e);
+					float y = getMouseCoordY(e);
+					rect.onMouseEvent(e, true, rect.getShape().isPointWithin(x, y));
+				}
+			} else {
+				for (IClickable rect : shapes.clickers) {
+					rect.onMouseEvent(e, false, false);
+	
+				}
+				for (IClickable rect : shapes.clickersmovable) {
+					rect.onMouseEvent(e, false, false);
+				}
+			}
+			transformer.mouseEvent(e);
+		}
 	}
 
 
