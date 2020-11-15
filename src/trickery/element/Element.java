@@ -21,7 +21,7 @@ public class Element {
 			constr.constr(this);
 			// this.onsetup();
 			if(register) Main.main.register(this);
-			
+			// this.onsetup();
 		}
 		 // auto-register
 	}
@@ -115,6 +115,7 @@ public class Element {
 	public Integer fill = null;
 	public Integer stroke = null;
 	
+	public int textcolor = 0xFF000000;
 	
 	public float z_index = 0;
 	

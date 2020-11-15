@@ -53,17 +53,19 @@ public class Main extends MainFuncs{
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
 	
-	public Element e = new Element(10, 10, 100, 100, (self) -> {
+	public Element e = new Element(350, 50, 200, 200, (self) -> {
 
-		self.fill = 0xFF000000;
+		self.fill = 0xFF00BB00;
 		self.stroke = 0xFFFF6600;
-		self.z_index = 10;
+		self.z_index = -10;
+		self.text = "The quick brown fox jumps over the lazy dog";
+		self.registerfixed = true;
 		self.onclick = (self2, e, isClick, in) -> {
 			self.super_.onclick(e, isClick, in);
 			if(in && isClick) {
 				self.fill += 0x00001100;
 			}
-			};
+		};
 		// self.unregister(); // this MUST be the last call
 	});
 	

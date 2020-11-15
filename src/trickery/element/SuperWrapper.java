@@ -26,21 +26,17 @@ public class SuperWrapper {
 			main.stroke(self.stroke);
 		}
 		main.rect(self.x, self.y, self.lenx, self.leny);
-		if(self.text != null) {
-			main.text(self.text, self.x+5, self.y+5);
-		}
 
-		/*
-		if(hasText) {
-			if(textsize == 0.0) {
+		
+		if(self.text != null) {
+			if(self.textsize == 0.0) {
 				throw new NullPointerException("textsize 0.0. onSetup() was not called");
 			} else {
-				main.textSize(tex0
-				tsize);
+				main.textSize(self.textsize);
 			}
-			main.fill(textcolor);
-			main.text(text, x+5, y+5/*);//*//*, sizex, sizey);
-		}*/
+			main.fill(self.textcolor);
+			main.text(self.text, self.x+5, self.y+5, self.lenx, self.leny);
+		}
 		main.popStyle();
 		
 	};
