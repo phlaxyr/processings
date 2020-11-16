@@ -65,10 +65,19 @@ public class Element {
 	
 	private HashMap<String, Class<?>> storetypes;
 	private HashMap<String, Object> stores;
-	public <T> void store(String key, T value) {
+	/**
+	 * Use this as one way to extend Element
+	 * ie. put("isEnergetic", Boolean.TRUE);
+	 */
+	public <T> void put(String key, T value) {
 		storetypes.put(key, value.getClass());
 		stores.put(key, value);
 	}
+	/**
+	 * Use this as one way to extend Element
+	 * ie. see put() above
+	 * ie. get("isEnergetic", Boolean.class);
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(String key, Class<T> type) {
 		Class<?> c = storetypes.get(key);
@@ -112,8 +121,8 @@ public class Element {
 		this.y = y;
 		return this;
 	}
-	public Integer fill = null;
-	public Integer stroke = null;
+	public int fill = 0xFFFFFFFF;
+	public int stroke = 0xFF000000;
 	
 	public int textcolor = 0xFF000000;
 	
@@ -139,6 +148,13 @@ public class Element {
 		main.popStyle();
 	}
 	
+	public boolean isMovable = false;
+	/**
+	 * Convenience variable with no functionality whatsoever
+	 * 
+	 */
+	public boolean isSelected = false;
+	
 	/**
 	 * inclusize exclusive
 	 */
@@ -154,12 +170,7 @@ public class Element {
 	
 	public boolean registerfixed = true;
 	
-	public SetupHandler onsetup = (self) -> {
-		if(text != null && textsize == null) this.autoTextSize();
-	};
-	public void onsetup() {
-		onsetup.onsetup(this);
-	}
+
 	
 	// public Super Super = new Super();
 
@@ -171,6 +182,15 @@ public class Element {
 	 * Contains copies of original lambda functions, ie. draw, onclick, etc. that work and are callable
 	 */
 	public final SuperWrapper super_ = new SuperWrapper(this);
+	
+	public SetupHandler onsetup = super_.onsetup;
+	/**
+	 * To override, modify the clickhandler object
+	 * ie. self.onsetup = (self) -> self.unregister();
+	 */
+	public final void onsetup() {
+		onsetup.onsetup(this);
+	}
 	
 	public ClickHandler onclick = super_.onclick;
 	/**
@@ -189,6 +209,11 @@ public class Element {
 	 */
 	public final void draw() {
 		draw.draw(this);
+	}
+	
+	public DrawHandler customize = super_.customize;
+	public final void customize() {
+		customize.draw(this);
 	}
 	
 	public static void assertt(boolean value) { 

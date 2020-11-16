@@ -53,13 +53,13 @@ public class Main extends MainFuncs{
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
 	
-	public Element e = new Element(350, 50, 200, 200, (self) -> {
+	Element e1 = new Element(350, 50, 200, 200, (self) -> {
 
 		self.fill = 0xFF00BB00;
 		self.stroke = 0xFFFF6600;
 		self.z_index = -10;
 		self.text = "The quick brown fox jumps over the lazy dog";
-		self.registerfixed = true;
+		self.registerfixed = false;
 		self.onclick = (self2, e, isClick, in) -> {
 			self.super_.onclick(e, isClick, in);
 			if(in && isClick) {
@@ -67,6 +67,19 @@ public class Main extends MainFuncs{
 			}
 		};
 		// self.unregister(); // this MUST be the last call
+	});
+	Element e2 = new Element(650, 50, 100, 100, (self) -> {
+		self.fill = 0xFFFFFFFF;
+		self.text = "Button";
+		self.textsize = 30.0F;
+		self.onclick = (self2, e, is, in) -> {
+			self.super_.onclick(e, is, in);
+			if(is && in) {
+				self.isSelected = !self.isSelected;
+				self.fill = self.isSelected ? 0xFF00FF00 : 0xFFFFFFFF;
+			}
+		};
+
 	});
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {

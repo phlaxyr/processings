@@ -9,22 +9,28 @@ public class SuperWrapper {
 		this.el = el;
 	}
 	
-	public ClickHandler onclick = ClickHandler.NONE;
-	public void onclick(MouseEvent e, boolean isClick, boolean isInside) {
+	public final ClickHandler onclick = ClickHandler.NONE;
+	public final void onclick(MouseEvent e, boolean isClick, boolean isInside) {
 		onclick.onclick(el, e, isClick, isInside);
+	}
+	
+	public final DrawHandler customize = (self) -> {
+		Main main = Main.main;
+		main.fill(self.fill);
+		main.stroke(self.stroke);
+		
+	};
+	public final void customize() {
+		customize.draw(el);
 	}
 	
 	public final DrawHandler draw = (self) -> {
 
 		// System.out.print("draw");
-		Main.main.pushStyle();
 		Main main = Main.main;
-		if(self.fill != null) {
-			main.fill(self.fill);
-		}
-		if(self.stroke != null) {
-			main.stroke(self.stroke);
-		}
+		Main.main.pushStyle();
+
+		self.customize();
 		main.rect(self.x, self.y, self.lenx, self.leny);
 
 		
@@ -40,7 +46,16 @@ public class SuperWrapper {
 		main.popStyle();
 		
 	};
-	public void draw() {
+	public final void draw() {
 		draw.draw(el);
 	}
+	
+	
+	public final SetupHandler onsetup = (self) -> {
+		if(self.text != null && self.textsize == null) self.autoTextSize();
+	};
+	public final void onsetup() {
+		onsetup.onsetup(el);
+	}
+
 }
