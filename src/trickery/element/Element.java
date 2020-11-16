@@ -122,6 +122,9 @@ public class Element {
 		return this;
 	}
 	public int fill = 0xFFFFFFFF;
+	public int unselected_fill = fill;
+	public int selected_fill = fill;
+	public int pressed_fill = fill;
 	public int stroke = 0xFF000000;
 	
 	public int textcolor = 0xFF000000;
@@ -154,6 +157,11 @@ public class Element {
 	 * 
 	 */
 	public boolean isSelected = false;
+	/**
+	 * Convenience variable with no functionality whatsoever
+	 * 
+	 */
+	public boolean isPressed = false;
 	
 	/**
 	 * inclusize exclusive

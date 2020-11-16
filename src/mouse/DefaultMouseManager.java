@@ -14,6 +14,7 @@ public class DefaultMouseManager implements IMouseManager{
 	public ShapeSet shapes() {
 		return m.shapes;
 	}
+	@Deprecated
 	@Override
 	public void mouseEvent(MouseEvent e) {
 		if(e.getAction() == MouseEvent.RELEASE ) {
