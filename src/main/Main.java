@@ -1,5 +1,7 @@
 package main;
 
+import java.util.HashMap;
+
 import annotation.AddFixed;
 import annotation.AnnotationProcessor;
 import annotation.Peek;
@@ -14,6 +16,7 @@ import shape.FancyRect;
 import shape.New;
 import shape.Textbox;
 import trickery.element.Element;
+import trickery.element.TransformPolicy;
 import ui.Toolbox;
 import ui.ToolboxManager;
 import ui.ToolboxState;
@@ -137,12 +140,23 @@ public class Main extends MainFuncs{
 		//		main.point((300 * scale_factor)-nox, (300 * scale_factor)-noy);
 		main.popStyle();
 
+		
+		for(TransformPolicy policy : transforms.keySet()) {
+			if(transforms.get(policy)) {
+				policy.transform();
+				policy.drawAssociated();
+				policy.antitransform();
+			}
+		}
+		
 //		noLoop();
 		
 		// end fixed
 
 		
 	}
+	public HashMap<TransformPolicy, Boolean> transforms = new HashMap<>();
+	
 	private AnnotationProcessor annotation;
 
 	@Override
