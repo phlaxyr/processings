@@ -3,7 +3,7 @@ package trickery.element;
 import processing.event.MouseEvent;
 
 public class Subclass {
-	public final ClickHandler button_onclick = (self, e, is, in) -> {
+	public final ClickHandler onclick = (self, e, is, in) -> {
 		self.super_.onclick(e, is, in);
 		if(e.getAction() == MouseEvent.MOVE || e.getAction() == MouseEvent.EXIT || e.getAction() == MouseEvent.ENTER) return;
 		switch (e.getAction()) {		
