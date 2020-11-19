@@ -1,16 +1,20 @@
 package clickers.responsive;
 
-import rect.FancyRect;
-import rect.New;
+import clickers.responsive.trickery.IRequireSelectionable;
+import shape.FancyRect;
+import shape.New;
 
 public abstract class AbstractResponsiveRect extends FancyRect implements IRequireSelectionable{
 	public AbstractResponsiveRect(New b) {
 		super(b);
 	}
-
 	public AbstractResponsiveRect(int x, int y, int sizex, int sizey) {
 		super(x, y, sizex, sizey);
 	}
+	public AbstractResponsiveRect(int x, int y, int sizex, int sizey, String text) {
+		super(x, y, sizex, sizey, text);
+	}
+	
 
 	@Override
 	public void defaultCustomizations() {

@@ -2,41 +2,39 @@ package clickers.responsive;
 
 import clickers.AbstractButton;
 import processing.event.MouseEvent;
-public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton<ResponsiveRect> implements ISelectionable{
+public class ResponsiveButton/*<T extends ResponsiveRect>*/ extends AbstractButton implements ISelectionable {
 
 
 
 	public ResponsiveButton(ResponsiveRect rect) {
 		super(rect);
 	}
-
+	@Override
+		public ResponsiveRect getShape() {
+			return (ResponsiveRect) super.getShape();
+		}
+	
 	{
-		rect.linkSelectionable(this);
+		getShape().acknowledgeContainer(this);
 	}
 
 	
 	public boolean isSelected = false;
 
 	@Override
-	public void onClick(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
 //		isSelected = true;
-		isSelected = !isSelected;
+		if(isClick && isInside) {
+			isSelected = !isSelected;
+		}
 	}
 
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
-//		isSelected = false;
-		
-	}
 
 
 	@Override
 	public boolean isSelected() {
 		return isSelected;
 	}
-	
-
 
 	
 	

@@ -2,40 +2,34 @@ package clickers;
 
 
 import processing.event.MouseEvent;
-import rect.FancyRect;
-import rect.Rect;
+import shape.FancyRect;
+import shape.Rect;
 
-public class AbstractButton<T extends Rect> implements IClickable<T>{
+public class AbstractButton implements IClickable {
 
-
-	public T rect;
+	public Rect rect;
 	
-	public AbstractButton(T rect) {
+	public AbstractButton(Rect rect) {
 		this.rect = rect;
 	}
 
 
 	@Override
-	public T getShape() {
+	public Rect getShape() {
 		return rect;
 	}
 
-	public static AbstractButton<FancyRect> make(int x, int y, int sizex, int sizey) {
-		return new AbstractButton<FancyRect>(new FancyRect(x, y, sizex, sizey));
+	public static AbstractButton make(int x, int y, int sizex, int sizey) {
+		return new AbstractButton(new FancyRect(x, y, sizex, sizey));
 	}
-	public T rect() {
-		return getShape();
+	public Rect rect() {
+		return rect;
 	}
 
 
 
 	@Override
-	public void onClick(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void onClickOutside(MouseEvent e) {
+	public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
 		
 	}
 
@@ -43,6 +37,12 @@ public class AbstractButton<T extends Rect> implements IClickable<T>{
 	@Override
 	public void onSetup() {
 		
+	}
+
+
+	@Override
+	public void draw() {
+		this.getShape().draw();
 	}
 	
 

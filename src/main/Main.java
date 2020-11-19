@@ -1,41 +1,33 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import annotation.AddFixed;
 import annotation.AnnotationProcessor;
 import annotation.Peek;
-import clickers.AbstractButton;
+import annotation.Setup;
 import clickers.FancyButton;
 import clickers.IClickable;
-import clickers.responsive.InteResponsiveButton;
-import clickers.responsive.InteResponsiveTextButton;
+import clickers.responsive.CoupledButton;
 import clickers.responsive.ResponsiveButton;
-import clickers.responsive.ResponsiveTextButton;
 import processing.core.PApplet;
-import processing.core.PGraphics;
-import processing.core.PMatrix;
 import processing.event.MouseEvent;
-import rect.FancyRect;
-import rect.New;
-import rect.Rect;
-import rect.Textbox;
+import shape.FancyRect;
+import shape.New;
+import shape.Textbox;
+import trickery.element.Element;
+import trickery.element.TransformPolicy;
 import ui.Toolbox;
+import ui.ToolboxManager;
+import ui.ToolboxState;
 
-public class Main extends PApplet{
+public class Main extends MainFuncs{
 
 	public static Main main;
-	public static PGraphics pgraphics;
-	
+//	public static PGraphics pgraphics;
 	{
-		System.out.println("INIT BLOCK!");
 		Main.main = this;
-		Rect.main = this;
-		Transform.main = this;
-		AnnotationProcessor.main = this;
-		Ap.p = this;
-		pgraphics = new PGraphics();
+		MainFuncs.initBlock(this);
 	}
 
 	public static void main(String[] args) {
@@ -44,7 +36,6 @@ public class Main extends PApplet{
 	@Override
 	public void settings() {
 		this.size(1000, 1000);
-
 		annotation = new AnnotationProcessor().addClass(this).addClass(tb);
 
 	}
@@ -56,51 +47,62 @@ public class Main extends PApplet{
 	@AddFixed
 	public ResponsiveButton rb = New.at(35,300,50,50).selectedFill(0xFF303000).fill(0xFF666600).ResponsiveButton();
 	@AddFixed
-	public InteResponsiveButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveButton();
+	public CoupledButton rb2 = New.at(35,360,50,50).selectedFill(0xFF303000).fill(0xFF666600).CoupledButton();
 	@AddFixed
-	public ResponsiveTextButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
+	public ResponsiveButton t1 = New.at(95,300,50,50).text("test1").selectedFill(0xFF303000).fill(0xFF666600).ResponsiveTextButton();
 	@AddFixed
-	public InteResponsiveTextButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).InteResponsiveTextButton();
+	public CoupledButton t2 = New.at(95,360,50,50).text("test2").selectedFill(0xFF303000).fill(0xFF666600).CoupledTextButton();
 	@AddFixed
 	public Toolbox toolb = new Toolbox(0, 800, 1000, 70);
 	
+	
+	Element e1 = new Element(350, 50, 200, 200, (self) -> {
+
+		self.fill = 0xFF00BB00;
+		self.stroke = 0xFFFF6600;
+		self.z_index = -10;
+		self.text = "The quick brown fox jumps over the lazy dog";
+		self.registerfixed = false;
+		self.onclick = (self2, e, isClick, in) -> {
+			self.super_.onclick(e, isClick, in);
+			if(in && isClick) {
+				self.fill += 0x00001100;
+			}
+		};
+		// self.unregister(); // this MUST be the last call
+	});
+	Element e2 = new Element(650, 50, 100, 100, (self) -> {
+		self.fill = 0xFFFFFFFF;
+		self.text = "Button";
+		self.textsize = 30.0F;
+		self.onclick = self.super_.button.onclick;
+	});
+	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
-		public void onClick(MouseEvent e) {
-			clickedin = true;
+		public void onMouseEvent(MouseEvent e, boolean isClick, boolean isInside) {
+			if(isClick) {
+				clickedin = isInside;
+			}
 		}
-		public void onClickOutside(MouseEvent e) {
-			clickedin = false;
-		};
 	};
 	@Override
 	public void setup() {
 		System.out.println("SETUP!");
-		super.setup();
 		this.surface.setResizable(true);
-		background(0x00FFFFFF); 
 		main.registerMethod("mouseEvent", this);
-		rectsmovable.add(buton1.rect);
-		clickersmovable.add(buton1);
-		registerMovableButton(new FancyButton(100,200,16,16)).rect().fill(0xFF00FF00);
-		registerMovableButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)));
-		registerMovableButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)));
+		background(0x00FFFFFF); 
+		shapes.rectsmovable.add(buton1.rect);
+		shapes.clickersmovable.add(buton1);
+		registerButton(new FancyButton(100,200,16,16), false).rect().fill(0xFF00FF00);
+		registerButton(new FancyButton(new FancyRect(200,100,16,16).fill(0xFF0000FF)), false);
+		registerButton(new FancyButton(new FancyRect(200,200,16,16).fill(0xFF00FFFF)), false);
 //		matrix = main.getMatrix();
-		transformer.setup();
+
 //		tb.autoTextSize();
-		for(Rect r : rects) r.onSetup();
-		for(IClickable<?> c : clickers) c.onSetup();
-		for(Rect r : rectsmovable) r.onSetup();
-		for(IClickable<?> c : clickersmovable) c.onSetup();
+		MainFuncs.setupDependents(this);
 	}
-
-
 	
-	
-	public List<Rect> rectsmovable = new ArrayList<>();
-	public List<IClickable<?>> clickersmovable = new ArrayList<>();
-	public List<Rect> rects = new ArrayList<>();
-	public List<IClickable<?>> clickers = new ArrayList<>();
 	@Override
 	public void draw() {
 		
@@ -110,9 +112,7 @@ public class Main extends PApplet{
 		// start movable
 		
 
-		for (Rect rect : rectsmovable) {
-			rect.draw();
-		}
+		shapes.drawMovable();
 		Demo.gridLines(); // grid lines
 
 		// end movable
@@ -121,9 +121,7 @@ public class Main extends PApplet{
 		
 		// start fixed
 		
-		for (Rect rect : rects) {
-			rect.draw();
-		}
+		shapes.drawFixed();
 		Debug.debugPoints(); // debug points
 
 		main.pushStyle();
@@ -142,12 +140,23 @@ public class Main extends PApplet{
 		//		main.point((300 * scale_factor)-nox, (300 * scale_factor)-noy);
 		main.popStyle();
 
+		
+		for(TransformPolicy policy : transforms.keySet()) {
+			if(transforms.get(policy)) {
+				policy.transform();
+				policy.drawAssociated();
+				policy.antitransform();
+			}
+		}
+		
 //		noLoop();
 		
 		// end fixed
 
 		
 	}
+	public HashMap<TransformPolicy, Boolean> transforms = new HashMap<>();
+	
 	private AnnotationProcessor annotation;
 
 	@Override
@@ -159,143 +168,48 @@ public class Main extends PApplet{
 	public boolean doTransformations = true;
 //	public PMatrix matrix;
 //	public float tempx, tempy = 0;
-	public Transform transformer = new Transform();
-	public void mouseEvent(MouseEvent e) {
-		
 
-		if(e.getAction() == MouseEvent.RELEASE ) {
-			for (IClickable<?> rect : clickers) {
+	@Setup
+	public ToolboxManager selector = new ToolboxManager();
+	@SuppressWarnings("unused")
+	public void mouseEvent(MouseEvent e) {
+
+		if(false && ToolboxManager.isState(toolb, ToolboxState.MOVE)) {
+			// MOVE
+			float x = e.getX();
+			float y = e.getY();
+			if(!toolb.isPointWithin(x, y)) { // if we're clicking on a sandbox, nontoolbox thing
+				selector.onToolboxMouse(e);
+			}
+			
+		} else {
+		
+			for (IClickable rect : shapes.clickers) {
 				float x = e.getX();
 				float y = e.getY();
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onClick(e);
-				} else {
-					rect.onClickOutside(e);
-				}
+				rect.onMouseEvent(e, e.getAction() == MouseEvent.RELEASE, rect.getShape().isPointWithin(x, y));
+
 			}
-			for (IClickable<?> rect : clickersmovable) {
-				float x = this.getMouseCoordX(e);
-				float y = this.getMouseCoordY(e);
-				if(rect.getShape().isPointWithin(x, y)) {
-					rect.onClick(e);
-				} else {
-					rect.onClickOutside(e);
-				}
+			for (IClickable rect : shapes.clickersmovable) {
+				float x = getMouseCoordX(e);
+				float y = getMouseCoordY(e);
+				rect.onMouseEvent(e, e.getAction() == MouseEvent.RELEASE, rect.getShape().isPointWithin(x, y));
 			}
+			// NORMAL
+//			if(e.getAction() == MouseEvent.RELEASE ) {
+//
+//			} else {
+//				for (IClickable rect : shapes.clickers) {
+//					rect.onMouseEvent(e, false, false);
+//	
+//				}
+//				for (IClickable rect : shapes.clickersmovable) {
+//					rect.onMouseEvent(e, false, false);
+//				}
+//			}
+			transformer.mouseEvent(e);
 		}
-		transformer.mouseEvent(e);
-
-		
-//		loop();
-	}
-	public void updateTfmMatrix() {
-		transformer.updateTfmMtx();
-	}
-	public PMatrix getTfmMatrix() {
-		return transformer.matrix;
-	}
-	public void setTfmMatrix(PMatrix to) {
-		transformer.matrix = to;
-	}
-	public void loadTfmMatrix() {
-		main.setMatrix(this.getTfmMatrix());
-	}
-//	public void scaleFromPoint(float x, float y, float scaleby) {
-//		scale_factor = scaleby;
-//		p1x = x*(1 - scaleby);
-//		p1y = y*(1 - scaleby);
-//	}
-//	public void scaleFromPoint(float x, float y, float sf) {
-//		scale_factor = sf;
-//		p1x = x * (sf - 1);
-//		p1y = y * (sf - 1);
-//	}
-	public void scaleFromPoint(float m2x, float m2y, float f2) {
-		transformer.scaleFromPoint(m2x, m2y, f2);
-	}
-	
-	public float p1x() {
-		return transformer.p1x;
-	}
-	public float p1y() {
-		return transformer.p1y;
-	}
-	public float sf() {
-		return transformer.scale_factor;
-	}
-	public void setsf(float to) {
-		this.transformer.scale_factor = to;
-	}
-	public void setp1(float x, float y) {
-		this.transformer.p1x = x;
-		this.transformer.p1y = y;
-	}
-	
-	public float getMouseCoordX() {
-		return screenXToCoordX(main.mouseX);
-	}
-	public float getMouseCoordX(MouseEvent e) {
-		return screenXToCoordX(e.getX());
-	}
-	public float getMouseCoordY() {
-		return screenYToCoordY(main.mouseY);
-	}
-	public float getMouseCoordY(MouseEvent e) {
-		return screenYToCoordY(e.getY());
-	}
-	
-	public float[] screenXYToCoordXY(float x, float y) {
-		return transformer.screenXYToCoordXY(x, y);
-	}
-	public float[] coordXYToScreenXY(float x, float y) {
-		return transformer.coordXYToScreenXY(x, y);
-	}
-	public float screenXToCoordX(float x) {
-		return transformer.screenXToCoordX(x);
-	}
-	public float screenYToCoordY(float y) {
-		return transformer.screenYToCoordY(y);
-	}
-	public float coordXToScreenX(float x) {
-		return transformer.coordXToScreenX(x);
-	}
-	public float coordYToScreenY(float y) {
-		return transformer.coordYToScreenY(y);
-	}
-	public void erase(int posx, int posy, int sizex, int sizey) {
-		main.pushStyle();
-		main.fill(255);
-		main.stroke(255);
-		main.rect(posx, posy, sizex, sizey);
 	}
 
-	public <N extends AbstractButton<?>> N registerMovableButton(N b) {
-		rectsmovable.add(b.rect);
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends AbstractButton<?>> N registerButton(N b) {
-		rects.add(b.rect);
-		clickers.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerMovableClickable(N b) {
-		clickersmovable.add(b);
-		return b;
-	}
-	public <N extends IClickable<?>> N registerClickable(N b) {
-		clickers.add(b);
-		return b;
-	}
-	
-	public <N extends Rect> N registerMovableRect(N b) {
-		rectsmovable.add(b);
-		return b;
-	}
 
-	
-	public <N extends Rect> N registerRect(N b) {
-		rects.add(b);
-		return b;
-	}
 }

@@ -1,13 +1,13 @@
 package clickers;
 
-import rect.Rect;
+import shape.Rect;
 
 /**
  * Simple button. A little unconventional hierarchy
  * @author phlaxyr
  *
  */
-public class SimpleButton extends AbstractButton<Rect>{
+public class SimpleButton extends AbstractButton {
 
 	public SimpleButton(Rect rect) {
 		super(rect);
