@@ -1,6 +1,8 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import annotation.AddFixed;
 import annotation.AnnotationProcessor;
@@ -17,6 +19,8 @@ import shape.New;
 import shape.Textbox;
 import trickery.element.Element;
 import trickery.element.TransformPolicy;
+import trickery.toolbox.ToolboxCoordinator;
+import trickery.toolbox.ToolboxSubimpl;
 import ui.Toolbox;
 import ui.ToolboxManager;
 import ui.ToolboxState;
@@ -77,6 +81,22 @@ public class Main extends MainFuncs{
 		self.textsize = 30.0F;
 		self.onclick = self.super_.button.onclick;
 	});
+	Element e3 = new Element(650, 50, 100, 100, (self) -> {
+		self.fill = 0xFFFFFFFF;
+		self.registerfixed = false;
+		self.text = "Move Me";
+		self.textsize = 30.0F;
+		self.isMovable = true;
+	});
+	
+
+
+	
+	ToolboxCoordinator tbco = new ToolboxCoordinator(new ArrayList<Element>(), (self)->{});
+	{
+		tbco.tbAddButton(new Element((self) -> self.text = "Select"));
+	}
+	
 	
 	public FancyButton buton1 = new FancyButton(new FancyRect(100,100,16,16).fill(0xFFFF0000)) {
 		@Override
@@ -108,10 +128,10 @@ public class Main extends MainFuncs{
 		
 		main.background(255);
 		main.pushMatrix(); 
-		this.loadTfmMatrix();
+
 		// start movable
 		
-
+		this.loadTfmMatrix();
 		shapes.drawMovable();
 		Demo.gridLines(); // grid lines
 

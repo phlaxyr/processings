@@ -3,7 +3,6 @@ package shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import clickers.IClickable;
 import mouse.MovableMouseEvent;
@@ -28,16 +27,31 @@ public class ShapeSet {
 		// draw elements according to z_index
 		List<Element> z_index = new ArrayList<>(elements);
 		
-		Collections.sort(z_index, (a, b) -> Float.compare(a.z_index, b.z_index));
 		
-        List<List<Element>> lists = new ArrayList<>(
-        			z_index.stream() 
-                    .collect(Collectors.partitioningBy(s -> s.z_index > 0)) 
-                    .values()); 
-        Element.assertt(lists.size() == 2);
-        
+
+//        List<List<Element>> lists = new ArrayList<>(
+//    			z_index.stream() 
+//                .collect(Collectors.partitioningBy(s -> s.z_index > 0)) 
+//                .values()); 
+//		Element.assertt(lists.size() == 2);
+//		this.z_index_partition = lists.get(0).size();
+		
+		// Ideally, the most lazy way to do it is to somehow pass a 
+		// pivot to a preexisting quicksort algorithm
+		// and then extract the partitions
+		// and get the length of the first set
+		
+		
+		int i = 0;
+		for(Element e: z_index) {
+			if(e.z_index > 0) i++;
+			
+		}
+		this.z_index_partition = i; // get the partition
+		
+		
+		Collections.sort(z_index, (a, b) -> Float.compare(a.z_index, b.z_index));
         this.z_index = z_index;
-        this.z_index_partition = lists.get(0).size();
 		
 	}
 	

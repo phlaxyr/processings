@@ -4,8 +4,37 @@ import java.util.HashMap;
 
 import main.Main;
 import processing.event.MouseEvent;
+import trickery.element.subimpl.SuperimplPolicy;
 
-public class Element {
+/**
+ * Creates an all-purpose element.
+ * 
+ * <br>
+ * Primarily uses lambdas and function handlers 
+ * in an imitation of python's and js's treatment of functions
+ * instead of inheritance.
+ * <br>
+ * ie. instead of overriding draw(), set draw to a new handler/lambda
+ * <br>
+ * ie. draw = (self) -> System.out.println("hi");
+ * <br>
+ * self.super_ contains the default, unmodified implementations of methods
+ * that might be of use when "overriding" functions
+ * <br>
+ * ie. draw = (self) -> {
+ * System.out.println("hi");
+ * self.super_.draw();
+ * }
+ * <br>
+ * self.super_ also contains default implementations of possible
+ * "subclasses"; ie. self.super_.button
+ * <br>
+ * <b>Do NOT extend Element, unless you know what you're doing. 
+ * For instance, see the tricky postconstr() handling.</b>
+ * @author phlaxyr
+ *
+ */
+public class Element {//extends DeepDictionary{
 	/**
 	 * Should be run after all super() calls and all subclass super() calls;
 	 * Should be ran exactly once.
@@ -16,7 +45,7 @@ public class Element {
 	 * super(x, y, lenx, leny, null); // passing null to the postconstr
 	 * @param constr
 	 */
-	private void postconstr(PostConstructor constr) {
+	protected void postconstr(PostConstructorT<? super Element> constr) {
 		if(constr != null) {
 			constr.constr(this);
 			// this.onsetup();
@@ -24,6 +53,9 @@ public class Element {
 			// this.onsetup();
 		}
 		 // auto-register
+	}
+	public Element(PostConstructor constr) {
+		this.postconstr(constr);
 	}
 	public Element(int x, int y, PostConstructor constr) {
 		this.x = x;
@@ -37,19 +69,47 @@ public class Element {
 		this.postconstr(constr);
 	}
 	
-	private HashMap<Class<? extends Object>, Object> submap;
-	@SuppressWarnings("unchecked")
-	public <V> V sub(V key) {
-		return (V) submap.get(key.getClass());
+	private HashMap<Class<? extends IElementSubimpl>, IElementSubimpl> submap = new HashMap<>();
+	protected HashMap<Class<? extends IElementSubimpl>, IElementSubimpl> __get_submap_internal__() {
+		return submap;
 	}
-	@SuppressWarnings("unchecked")
-	public <V> V sub(Class<V> clazz) {
-		return (V) submap.get(clazz.getClass());
-	}
-	public <V> void addSub(V sub) {
+
+	public <V extends IElementSubimpl> void installSubimpl(V sub) {
+		sub.__finish_initialization__(this);
 		submap.put(sub.getClass(), sub);
+//		sub.__declare_superimpl__(parent);
+		SuperimplPolicy sups = sub.__get_superimpl__(this);
+		for(Class<? extends IElementSubimpl> c : sups.toBeInstalled()) {
+			if (!submap.containsKey(c)) {
+				submap.put(c, sub);
+			} else {
+				throw new IllegalArgumentException("SuperimplPolicy is mishandled; duplicate " + c);
+			}
+		}
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public <V extends IElementSubimpl> V sub(V instance) {
+		return (V) getSubimpl(instance.getClass());
+	}
+	@SuppressWarnings("unchecked")
+	public <V extends IElementSubimpl> V getSubimpl(Class<V> clazz) {
+		return (V) submap.get(clazz);
+	}
+	
+	public <V extends IElementSubimpl> V cast(Class<V> subclass) {
+		return getSubimpl(subclass);
+	}
+	public <V extends IElementSubimpl> V cast(Class<V> subclass, V returnOnError) {
+		if (submap.containsKey(subclass)) {
+			return getSubimpl(subclass);
+		} else {
+			return returnOnError;
+		}
+	}
+	
+	/*
 	private HashMap<Class<? extends Object>, Object> funcmap;
 	@SuppressWarnings("unchecked")
 	public <F> F func(F key) {
@@ -63,12 +123,23 @@ public class Element {
 		funcmap.put(sub.getClass(), sub);
 	}
 	
+	private HashMap<String, Object> funcstrmap;
+	@SuppressWarnings("unchecked")
+	public <F> F func(String key) {
+		return (F) funcstrmap.get(key);
+	}
+	public <F> void addFunc(String sub, F func) {
+		funcstrmap.put(sub, func);
+	}
+	
+
+	
 	private HashMap<String, Class<?>> storetypes;
 	private HashMap<String, Object> stores;
 	/**
 	 * Use this as one way to extend Element
 	 * ie. put("isEnergetic", Boolean.TRUE);
-	 */
+	 *//*
 	public <T> void put(String key, T value) {
 		storetypes.put(key, value.getClass());
 		stores.put(key, value);
@@ -77,7 +148,7 @@ public class Element {
 	 * Use this as one way to extend Element
 	 * ie. see put() above
 	 * ie. get("isEnergetic", Boolean.class);
-	 */
+	 *//*
 	@SuppressWarnings("unchecked")
 	public <T> T get(String key, Class<T> type) {
 		Class<?> c = storetypes.get(key);
@@ -92,7 +163,7 @@ public class Element {
 			return (T) stores.get(key);
 		} 
 		throw new AssertionError("Stored class " + c + "for " + key + " doesn't match " + type);
-	}
+	}*/
 	
 	// BUILT-INS
 	public int x;
